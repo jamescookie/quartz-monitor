@@ -1,3 +1,4 @@
+<%@ page import="org.grails.plugins.quartz.TriggerState" %>
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
@@ -13,6 +14,9 @@
             <g:if test="${flash.message}">
             <div class="message">${flash.message}</div>
             </g:if>
+            <div>
+                <h3>Current Time: ${new Date()}</h3>
+            </div>
             <div class="list">
                 <table>
                     <thead>
@@ -22,7 +26,8 @@
                             <th>Next Run</th>
                             <th>Status</th>
                             <th>Stop Job</th>
-                            <th>Pause Job</th>
+                            <th>Pause/Resume</th>
+                            <th>Run now</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -33,7 +38,13 @@
                             <td>${job.trigger?.nextFireTime}</td>
                             <td>${job.status}</td>
                             <td><a href="<g:createLink action="stop" params="[triggerName:job.trigger?.name, triggerGroup:job.trigger?.group]"/>">Stop</a></td>
-                            <td><a href="<g:createLink action="pause" params="[jobName:job.name, jobGroup:job.group]"/>">Pause</a></td>
+                            <g:if test="${job.status == TriggerState.PAUSED}">
+                                <td><a href="<g:createLink action="resume" params="[jobName:job.name, jobGroup:job.group]"/>">Resume</a></td>
+                            </g:if>
+                            <g:else>
+                                <td><a href="<g:createLink action="pause" params="[jobName:job.name, jobGroup:job.group]"/>">Pause</a></td>
+                            </g:else>
+                            <td><a href="<g:createLink action="runNow" params="[jobName:job.name, jobGroup:job.group]"/>">Run</a></td>
                         </tr>
                     </g:each>
                     </tbody>

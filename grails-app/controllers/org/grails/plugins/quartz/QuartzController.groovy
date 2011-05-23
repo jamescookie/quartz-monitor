@@ -36,4 +36,14 @@ class QuartzController {
         redirect(action: "list")
     }
 
+    def resume = {
+        quartzScheduler.resumeJob(params.jobName, params.jobGroup)
+        redirect(action: "list")
+    }
+
+    def runNow = {
+        quartzScheduler.triggerJob(params.jobName, params.jobGroup, null)
+        redirect(action: "list")
+    }
+
 }
