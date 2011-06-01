@@ -22,8 +22,10 @@
                     <thead>
                         <tr>
                             <th>Name</th>
-                            <th>Last Run</th>
-                            <th>Next Run</th>
+                            <th>Last Duration</th>
+                            <th>Last Actual Run</th>
+                            <th>Last Scheduled Run</th>
+                            <th>Next Scheduled Run</th>
                             <th>Status</th>
                             <th>Stop Job</th>
                             <th>Pause/Resume</th>
@@ -34,6 +36,8 @@
                     <g:each in="${jobs}" status="i" var="job">
                         <tr class="${(i % 2) == 0 ? 'odd' : 'even'}">
                             <td>${job.name}</td>
+                            <td>${job.duration}</td>
+                            <td>${job.lastRun}</td>
                             <td>${job.trigger?.previousFireTime}</td>
                             <td>${job.trigger?.nextFireTime}</td>
                             <td>${job.status}</td>

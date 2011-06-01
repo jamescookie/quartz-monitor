@@ -1,3 +1,5 @@
+import org.grails.plugins.quartz.QuartzDisplayJobFactory
+
 class QuartzDisplayGrailsPlugin {
     // the plugin version
     def version = "0.1"
@@ -26,7 +28,7 @@ Brief description of the plugin.
     }
 
     def doWithSpring = {
-        // TODO Implement runtime spring config (optional)
+        quartzJobFactory(QuartzDisplayJobFactory)
     }
 
     def doWithDynamicMethods = { ctx ->

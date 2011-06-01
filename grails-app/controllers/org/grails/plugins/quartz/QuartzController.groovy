@@ -1,6 +1,5 @@
 package org.grails.plugins.quartz
 
-import org.codehaus.groovy.grails.plugins.quartz.JobObject
 import org.quartz.Scheduler
 
 class QuartzController {
@@ -12,18 +11,38 @@ class QuartzController {
     }
 
     def list = {
-        def jobs = []
-        def allJobs = jobManagerService.getAllJobs()
-        allJobs.each {JobObject jobObject ->
-            def job = [:]
-            job.name = jobObject.name
-            job.group = jobObject.group
-            job.trigger = quartzScheduler.getTrigger(jobObject.triggerName, jobObject.triggerGroup)
-            job.status = TriggerState.find {it.value() == jobObject.status} ?: "UNKNOWN"
-            jobs << job
+        def jobsList = []
+        def listJobGroups = quartzScheduler.getJobGroupNames()
+        listJobGroups?.each {jobGroup ->
+            quartzScheduler.getJobNames(jobGroup)?.each {jobName ->
+                def triggers = quartzScheduler.getTriggersOfJob(jobName, jobGroup)
+                if (triggers) {
+                    triggers.each {trigger ->
+                        def currentJob = createJob(jobGroup, jobName, jobsList)
+                        currentJob.trigger = trigger
+                        currentJob.triggerName = trigger.name
+                        currentJob.triggerGroup = trigger.group
+                        def state = quartzScheduler.getTriggerState(trigger.name, trigger.group)
+                        currentJob.status = TriggerState.find {
+                            it.value() == state
+                        } ?: "UNKNOWN"
+                    }
+                } else {
+                    createJob(jobGroup, jobName, jobsList)
+                }
+            }
         }
+        [jobs:jobsList]
+    }
 
-        [jobs:jobs]
+    private def createJob(String jobGroup, String jobName, ArrayList jobsList) {
+        def currentJob = [:]
+        currentJob.group = jobGroup
+        currentJob.name = jobName
+        def map = QuartzDisplayJobFactory.jobRuns.get(jobName)
+        if (map) currentJob << map
+        jobsList.add(currentJob)
+        return currentJob
     }
 
     def stop = {
