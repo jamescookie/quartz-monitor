@@ -39,7 +39,7 @@ class QuartzController {
         def currentJob = [:]
         currentJob.group = jobGroup
         currentJob.name = jobName
-        def map = QuartzDisplayJobFactory.jobRuns.get(jobName)
+        def map = QuartzMonitorJobFactory.jobRuns.get(jobName)
         if (map) currentJob << map
         jobsList.add(currentJob)
         return currentJob

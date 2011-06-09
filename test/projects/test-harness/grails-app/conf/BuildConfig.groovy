@@ -30,4 +30,4 @@ grails.project.dependency.resolution = {
     }
 }
 
-grails.plugin.location."quartz-display" = "../../.."
+grails.plugin.location."quartz-monitor" = "../../.."

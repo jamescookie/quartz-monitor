@@ -17,11 +17,11 @@ import java.util.Map;
  * @author James Cook
  * @since 0.1
  */
-public class QuartzDisplayJobFactory extends GrailsJobFactory {
+public class QuartzMonitorJobFactory extends GrailsJobFactory {
     static final java.util.Map<String, Map<String, Object>> jobRuns = new HashMap<String, Map<String, Object>>();
 
     protected Object createJobInstance(TriggerFiredBundle bundle) throws Exception {
-        String grailsJobName = (String) bundle.getJobDetail().getJobDataMap().get(JobDetailFactoryBean.JOB_NAME_PARAMETER);
+        String grailsJobName = bundle.getJobDetail().getName();
         Object job = super.createJobInstance(bundle);
         if (job instanceof GrailsTaskClassJob) {
             Map<String, Object> map;

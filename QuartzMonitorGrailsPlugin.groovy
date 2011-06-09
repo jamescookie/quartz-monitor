@@ -1,6 +1,6 @@
-import org.grails.plugins.quartz.QuartzDisplayJobFactory
+import org.grails.plugins.quartz.QuartzMonitorJobFactory
 
-class QuartzDisplayGrailsPlugin {
+class QuartzMonitorGrailsPlugin {
     // the plugin version
     def version = "0.1"
     // the version or versions of Grails the plugin is designed for
@@ -21,14 +21,14 @@ Brief description of the plugin.
 '''
 
     // URL to the plugin's documentation
-    def documentation = "http://grails.org/plugin/quartz-display"
+    def documentation = "http://grails.org/plugin/quartz-monitor"
 
     def doWithWebDescriptor = { xml ->
         // TODO Implement additions to web.xml (optional), this event occurs before 
     }
 
     def doWithSpring = {
-        quartzJobFactory(QuartzDisplayJobFactory)
+        quartzJobFactory(QuartzMonitorJobFactory)
     }
 
     def doWithDynamicMethods = { ctx ->
