@@ -1,8 +1,24 @@
-#tooltip {
+#quartz-tooltip {
     position: absolute;
     border: 1px solid #333;
     background: #f7f5d1;
     padding: 2px 5px;
     color: #333;
     display: none;
+}
+
+#quartz-jobs .quartz-status {
+    padding-left: 25px;
+}
+#quartz-jobs .not-run {
+    background: url(../images/not-run.gif) 5px 50% no-repeat;
+}
+#quartz-jobs .running {
+    background: url(../images/running.gif) 5px 50% no-repeat;
+}
+#quartz-jobs .complete {
+    background: url(../images/complete.gif) 5px 50% no-repeat;
+}
+#quartz-jobs .error {
+    background: url(../images/error.gif) 5px 50% no-repeat;
 }

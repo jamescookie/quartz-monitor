@@ -4,6 +4,7 @@
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
         <meta name="layout" content="main" />
         <title>Quartz Jobs</title>
+        <link rel="stylesheet" href="${resource(dir: 'css', file: 'quartz-monitor.css', plugin: 'quartz-monitor')}"/>
     </head>
     <body>
         <div class="nav">
@@ -18,15 +19,13 @@
                 <h3>Current Time: ${new Date()}</h3>
             </div>
             <div class="list">
-                <table>
+                <table id="quartz-jobs">
                     <thead>
                         <tr>
                             <th>Name</th>
-                            <th>Last Duration</th>
-                            <th>Error</th>
                             <th>Last Run</th>
+                            <th class="quartz-to-hide">Result</th>
                             <th>Next Scheduled Run</th>
-                            <th>Status</th>
                             <th>Trigger Status</th>
                             <th>Stop Job</th>
                             <th>Pause/Resume</th>
@@ -37,14 +36,13 @@
                     <g:each in="${jobs}" status="i" var="job">
                         <tr class="${(i % 2) == 0 ? 'odd' : 'even'}">
                             <td>${job.name}</td>
-                            <td>${job.duration}</td>
-                            <td>${job.error}</td>
-                            <td>${job.lastRun}</td>
+                            <g:set var="tooltip">${job.duration ? "Job ran in: " + job.duration + "ms" : (job.error ? "Job threw exception: " + job.error : "")}</g:set>
+                            <td class="quartz-tooltip quartz-status ${job.status?:"not-run"}" data-tooltip="${tooltip}">${job.lastRun}</td>
+                            <td class="quartz-to-hide">${tooltip}</td>
                             <td>${job.trigger?.nextFireTime}</td>
-                            <td>${job.status}</td>
                             <td>${job.triggerStatus}</td>
                             <td><a href="<g:createLink action="stop" params="[triggerName:job.trigger?.name, triggerGroup:job.trigger?.group]"/>">Stop</a></td>
-                            <g:if test="${job.status == TriggerState.PAUSED}">
+                            <g:if test="${job.triggerStatus == TriggerState.PAUSED}">
                                 <td><a href="<g:createLink action="resume" params="[jobName:job.name, jobGroup:job.group]"/>">Resume</a></td>
                             </g:if>
                             <g:else>
@@ -57,5 +55,6 @@
                 </table>
             </div>
         </div>
+        <g:javascript src="quartz-monitor.js" plugin="quartz-monitor"/>
     </body>
 </html>
