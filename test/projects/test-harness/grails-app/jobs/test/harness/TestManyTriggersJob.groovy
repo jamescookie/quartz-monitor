@@ -9,6 +9,6 @@ class TestManyTriggersJob {
 
     def execute() {
         println "running many triggers job"
-        Thread.sleep((Math.random() * 10).intValue() * 1000)
+        Thread.sleep((Math.random() * 10).intValue() * 5129)
     }
 }
