@@ -7,6 +7,12 @@
     display: none;
 }
 
+#quartz-jobs .quartz-actions {
+    padding: 0;
+}
+#quartz-jobs .quartz-actions img {
+    padding: 1px 1px 0 3px;
+}
 #quartz-jobs .quartz-status {
     padding-left: 25px;
 }

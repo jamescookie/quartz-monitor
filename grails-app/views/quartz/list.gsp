@@ -26,10 +26,7 @@
                             <th>Last Run</th>
                             <th class="quartz-to-hide">Result</th>
                             <th>Next Scheduled Run</th>
-                            <th>Trigger Status</th>
-                            <th>Stop Job</th>
-                            <th>Pause/Resume</th>
-                            <th>Run now</th>
+                            <th>Actions</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -40,15 +37,23 @@
                             <td class="quartz-tooltip quartz-status ${job.status?:"not-run"}" data-tooltip="${tooltip}">${job.lastRun}</td>
                             <td class="quartz-to-hide">${tooltip}</td>
                             <td>${job.trigger?.nextFireTime}</td>
-                            <td>${job.triggerStatus}</td>
-                            <td><a href="<g:createLink action="stop" params="[triggerName:job.trigger?.name, triggerGroup:job.trigger?.group]"/>">Stop</a></td>
-                            <g:if test="${job.triggerStatus == TriggerState.PAUSED}">
-                                <td><a href="<g:createLink action="resume" params="[jobName:job.name, jobGroup:job.group]"/>">Resume</a></td>
-                            </g:if>
-                            <g:else>
-                                <td><a href="<g:createLink action="pause" params="[jobName:job.name, jobGroup:job.group]"/>">Pause</a></td>
-                            </g:else>
-                            <td><a href="<g:createLink action="runNow" params="[jobName:job.name, jobGroup:job.group]"/>">Run</a></td>
+                            <td class="quartz-actions">
+                                <g:if test="${job.status != 'running'}">
+                                    <g:if test="${job.trigger}">
+                                        <a href="<g:createLink action="stop" params="[triggerName:job.trigger.name, triggerGroup:job.trigger.group]"/>"><img class="quartz-tooltip" data-tooltip="Stop job from running again" src="<g:resource dir="images" file="stop.png" plugin="quartz-monitor"/>"></a>
+                                        <g:if test="${job.triggerStatus == TriggerState.PAUSED}">
+                                            <a href="<g:createLink action="resume" params="[jobName:job.name, jobGroup:job.group]"/>"><img class="quartz-tooltip" data-tooltip="Resume job schedule" src="<g:resource dir="images" file="resume.png" plugin="quartz-monitor"/>"></a>
+                                        </g:if>
+                                        <g:elseif test="${job.trigger.mayFireAgain()}">
+                                            <a href="<g:createLink action="pause" params="[jobName:job.name, jobGroup:job.group]"/>"><img class="quartz-tooltip" data-tooltip="Pause job schedule" src="<g:resource dir="images" file="pause.png" plugin="quartz-monitor"/>"></a>
+                                        </g:elseif>
+                                    </g:if>
+                                    <g:else>
+                                        <a href="<g:createLink action="start" params="[jobName:job.name, jobGroup:job.group]"/>"><img class="quartz-tooltip" data-tooltip="Start job schedule" src="<g:resource dir="images" file="start.png" plugin="quartz-monitor"/>"></a>
+                                    </g:else>
+                                    <a href="<g:createLink action="runNow" params="[jobName:job.name, jobGroup:job.group]"/>"><img class="quartz-tooltip" data-tooltip="Run now" src="<g:resource dir="images" file="run.png" plugin="quartz-monitor"/>"></a>
+                                </g:if>
+                            </td>
                         </tr>
                     </g:each>
                     </tbody>

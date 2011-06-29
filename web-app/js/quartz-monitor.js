@@ -29,9 +29,5 @@ if (jQuery) {
 
 		$(init);
 
-//		if (!window.quartzMonitor) window.quartzMonitor = {};
-//		window.quartzMonitor = {
-//			tooltip: tooltip
-//		};
 	}(jQuery, this));
 }
