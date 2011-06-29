@@ -3,6 +3,8 @@ package org.grails.plugins.quartz
 import org.quartz.Scheduler
 
 class QuartzController {
+    static final Map triggers = [:]
+
     def jobManagerService
     Scheduler quartzScheduler
 
@@ -46,7 +48,14 @@ class QuartzController {
     }
 
     def stop = {
+        triggers.put(params.jobName, quartzScheduler.getTrigger(params.triggerName, params.triggerGroup))
         quartzScheduler.unscheduleJob(params.triggerName, params.triggerGroup)
+        redirect(action: "list")
+    }
+    
+    def start = {
+        def trigger = triggers.get(params.jobName)
+        quartzScheduler.scheduleJob(trigger)
         redirect(action: "list")
     }
 
