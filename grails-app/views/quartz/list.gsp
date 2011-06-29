@@ -23,10 +23,11 @@
                         <tr>
                             <th>Name</th>
                             <th>Last Duration</th>
-                            <th>Last Actual Run</th>
-                            <th>Last Scheduled Run</th>
+                            <th>Error</th>
+                            <th>Last Run</th>
                             <th>Next Scheduled Run</th>
                             <th>Status</th>
+                            <th>Trigger Status</th>
                             <th>Stop Job</th>
                             <th>Pause/Resume</th>
                             <th>Run now</th>
@@ -37,10 +38,11 @@
                         <tr class="${(i % 2) == 0 ? 'odd' : 'even'}">
                             <td>${job.name}</td>
                             <td>${job.duration}</td>
+                            <td>${job.error}</td>
                             <td>${job.lastRun}</td>
-                            <td>${job.trigger?.previousFireTime}</td>
                             <td>${job.trigger?.nextFireTime}</td>
                             <td>${job.status}</td>
+                            <td>${job.triggerStatus}</td>
                             <td><a href="<g:createLink action="stop" params="[triggerName:job.trigger?.name, triggerGroup:job.trigger?.group]"/>">Stop</a></td>
                             <g:if test="${job.status == TriggerState.PAUSED}">
                                 <td><a href="<g:createLink action="resume" params="[jobName:job.name, jobGroup:job.group]"/>">Resume</a></td>

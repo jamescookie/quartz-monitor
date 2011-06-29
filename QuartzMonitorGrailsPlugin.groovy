@@ -28,7 +28,9 @@ Brief description of the plugin.
     }
 
     def doWithSpring = {
-        quartzJobFactory(QuartzMonitorJobFactory)
+        quartzJobFactory(QuartzMonitorJobFactory) {
+            sessionFactory = ref("sessionFactory")
+        }
     }
 
     def doWithDynamicMethods = { ctx ->

@@ -1,7 +1,7 @@
 package org.grails.plugins.quartz;
 
 import org.codehaus.groovy.grails.plugins.quartz.GrailsJobFactory;
-import org.codehaus.groovy.grails.plugins.quartz.JobDetailFactoryBean;
+import org.hibernate.SessionFactory;
 import org.quartz.Job;
 import org.quartz.JobExecutionContext;
 import org.quartz.JobExecutionException;
@@ -19,6 +19,11 @@ import java.util.Map;
  */
 public class QuartzMonitorJobFactory extends GrailsJobFactory {
     static final java.util.Map<String, Map<String, Object>> jobRuns = new HashMap<String, Map<String, Object>>();
+    private SessionFactory sessionFactory;
+
+    public void setSessionFactory(SessionFactory sessionFactory) {
+        this.sessionFactory = sessionFactory;
+    }
 
     protected Object createJobInstance(TriggerFiredBundle bundle) throws Exception {
         String grailsJobName = bundle.getJobDetail().getName();
@@ -31,7 +36,7 @@ public class QuartzMonitorJobFactory extends GrailsJobFactory {
                 map = new HashMap<String, Object>();
                 jobRuns.put(grailsJobName, map);
             }
-            job = new QuartzDisplayJob((GrailsTaskClassJob) job, map);
+            job = new QuartzDisplayJob((GrailsTaskClassJob) job, map, sessionFactory);
         }
         return job;
     }
@@ -42,16 +47,31 @@ public class QuartzMonitorJobFactory extends GrailsJobFactory {
     public class QuartzDisplayJob implements Job {
         GrailsTaskClassJob job;
         Map<String, Object> jobDetails;
+        private SessionFactory sessionFactory;
 
-        public QuartzDisplayJob(GrailsTaskClassJob job, Map<String, Object> jobDetails) {
+        public QuartzDisplayJob(GrailsTaskClassJob job, Map<String, Object> jobDetails, SessionFactory sessionFactory) {
             this.job = job;
             this.jobDetails = jobDetails;
+            this.sessionFactory = sessionFactory;
         }
 
         public void execute(final JobExecutionContext context) throws JobExecutionException {
+            jobDetails.clear();
             jobDetails.put("lastRun", new Date());
+            jobDetails.put("status", "running");
             long start = System.currentTimeMillis();
-            job.execute(context);
+            try {
+                job.execute(context);
+                sessionFactory.getCurrentSession().flush();
+            } catch (Throwable e) {
+                jobDetails.put("error", e.getMessage());
+                jobDetails.put("status", "error");
+                if (e instanceof JobExecutionException) {
+                    throw (JobExecutionException) e;
+                }
+                throw new JobExecutionException(e.getMessage(), e);
+            }
+            jobDetails.put("status", "complete");
             jobDetails.put("duration", System.currentTimeMillis() - start);
         }
     }

@@ -23,7 +23,7 @@ class QuartzController {
                         currentJob.triggerName = trigger.name
                         currentJob.triggerGroup = trigger.group
                         def state = quartzScheduler.getTriggerState(trigger.name, trigger.group)
-                        currentJob.status = TriggerState.find {
+                        currentJob.triggerStatus = TriggerState.find {
                             it.value() == state
                         } ?: "UNKNOWN"
                     }
