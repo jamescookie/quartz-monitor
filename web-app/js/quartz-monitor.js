@@ -9,13 +9,7 @@ if (jQuery) {
                 .hover(function(e){
                     var tooltipData = $(this).data('tooltip');
                     if (tooltipData === "") return;
-                    $('<p></p>')
-                            .text(tooltipData)
-                            .attr('id', 'quartz-tooltip')
-                            .css("top", (e.pageY - xOffset) + "px")
-                            .css("left", (e.pageX + yOffset) + "px")
-                            .appendTo('body')
-                            .fadeIn("fast");
+                    displayToolTip(tooltipData, (e.pageX + yOffset), (e.pageY - xOffset));
                 },
                 function(){
                     $("#quartz-tooltip").remove();
@@ -25,7 +19,17 @@ if (jQuery) {
                         .css("top",(e.pageY - xOffset) + "px")
                         .css("left",(e.pageX + yOffset) + "px");
                 });
-		};
+		},
+
+        displayToolTip = function(tooltipData, x, y) {
+            $('<p></p>')
+                    .text(tooltipData)
+                    .attr('id', 'quartz-tooltip')
+                    .css("top", y + "px")
+                    .css("left", x + "px")
+                    .appendTo('body')
+                    .fadeIn("fast");
+        };
 
 		$(init);
 
