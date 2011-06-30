@@ -62,6 +62,7 @@
             </div>
         </div>
         <g:javascript src="jquery.countdown.js" plugin="quartz-monitor"/>
+        <g:javascript src="jquery.color.js" plugin="quartz-monitor"/>
         <g:javascript src="quartz-monitor.js" plugin="quartz-monitor"/>
     </body>
 </html>

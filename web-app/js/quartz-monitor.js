@@ -28,12 +28,37 @@ if (jQuery) {
 		},
 
         reloadPage = function() {
-            console.log('reload!')
+            var original = $(this).css('color');
+            var delay = 200;
+            $(this).animate({
+                backgroundColor: '#f00',
+                color: '#fff'
+            }, delay, function() {
+                $(this).animate({
+                    backgroundColor: 'transparent',
+                    color: original
+                }, delay, function() {
+                    $(this).animate({
+                        backgroundColor: '#f00',
+                        color: '#fff'
+                    }, delay, function() {
+                        $(this).animate({
+                            backgroundColor: 'transparent',
+                            color: original
+                        }, delay, function() {
+                             location.reload(true);
+                        });
+                    });
+                });
+            });
         },
 
         countdown = function(item, remaining) {
             item.countdown(
-               {until: new Date(remaining), onExpiry: reloadPage});
+               {until: new Date(remaining),
+                   onExpiry: reloadPage,
+                   compact: true
+               });
         },
 
         displayToolTip = function(tooltipData, x, y) {
