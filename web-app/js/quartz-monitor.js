@@ -19,7 +19,22 @@ if (jQuery) {
                         .css("top",(e.pageY - xOffset) + "px")
                         .css("left",(e.pageX + yOffset) + "px");
                 });
+            $('.quartz-countdown').each(function() {
+                var item = $(this),
+                    remaining = item.data('next-run');
+                if (remaining === "") return;
+                countdown(item, remaining);
+            });
 		},
+
+        reloadPage = function() {
+            console.log('reload!')
+        },
+
+        countdown = function(item, remaining) {
+            item.countdown(
+               {until: new Date(remaining), onExpiry: reloadPage});
+        },
 
         displayToolTip = function(tooltipData, x, y) {
             $('<p></p>')

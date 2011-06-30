@@ -5,6 +5,7 @@
         <meta name="layout" content="main" />
         <title>Quartz Jobs</title>
         <link rel="stylesheet" href="${resource(dir: 'css', file: 'quartz-monitor.css', plugin: 'quartz-monitor')}"/>
+        <link rel="stylesheet" href="${resource(dir: 'css', file: 'jquery.countdown.css', plugin: 'quartz-monitor')}"/>
     </head>
     <body>
         <div class="nav">
@@ -16,7 +17,7 @@
             <div class="message">${flash.message}</div>
             </g:if>
             <div>
-                <h3>Current Time: ${new Date()}</h3>
+                <h3>Current Time: ${now}</h3>
             </div>
             <div class="list">
                 <table id="quartz-jobs">
@@ -33,10 +34,10 @@
                     <g:each in="${jobs}" status="i" var="job">
                         <tr class="${(i % 2) == 0 ? 'odd' : 'even'}">
                             <td>${job.name}</td>
-                            <g:set var="tooltip">${job.duration ? "Job ran in: " + job.duration + "ms" : (job.error ? "Job threw exception: " + job.error : "")}</g:set>
+                            <g:set var="tooltip">${job.duration >= 0 ? "Job ran in: " + job.duration + "ms" : (job.error ? "Job threw exception: " + job.error : "")}</g:set>
                             <td class="quartz-tooltip quartz-status ${job.status?:"not-run"}" data-tooltip="${tooltip}">${job.lastRun}</td>
                             <td class="quartz-to-hide">${tooltip}</td>
-                            <td>${job.trigger?.nextFireTime}</td>
+                            <td class="quartz-countdown" data-next-run="${job.trigger?.nextFireTime?.time ?: ""}">${job.trigger?.nextFireTime}</td>
                             <td class="quartz-actions">
                                 <g:if test="${job.status != 'running'}">
                                     <g:if test="${job.trigger}">
@@ -60,6 +61,7 @@
                 </table>
             </div>
         </div>
+        <g:javascript src="jquery.countdown.js" plugin="quartz-monitor"/>
         <g:javascript src="quartz-monitor.js" plugin="quartz-monitor"/>
     </body>
 </html>

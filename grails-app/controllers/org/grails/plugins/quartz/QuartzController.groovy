@@ -34,7 +34,7 @@ class QuartzController {
                 }
             }
         }
-        [jobs:jobsList]
+        [jobs:jobsList, now:new Date()]
     }
 
     private def createJob(String jobGroup, String jobName, ArrayList jobsList) {
