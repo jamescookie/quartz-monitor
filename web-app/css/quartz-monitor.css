@@ -28,3 +28,6 @@
 #quartz-jobs .error {
     background: url(../images/error.gif) 5px 50% no-repeat;
 }
+.list {
+    clear: both;
+}

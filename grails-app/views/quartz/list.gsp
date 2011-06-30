@@ -6,6 +6,7 @@
         <title>Quartz Jobs</title>
         <link rel="stylesheet" href="${resource(dir: 'css', file: 'quartz-monitor.css', plugin: 'quartz-monitor')}"/>
         <link rel="stylesheet" href="${resource(dir: 'css', file: 'jquery.countdown.css', plugin: 'quartz-monitor')}"/>
+        <link rel="stylesheet" href="${resource(dir: 'css', file: 'jquery.clock.css', plugin: 'quartz-monitor')}"/>
     </head>
     <body>
         <div class="nav">
@@ -16,7 +17,7 @@
             <g:if test="${flash.message}">
             <div class="message">${flash.message}</div>
             </g:if>
-            <div>
+            <div id="clock" data-time="${now.time}">
                 <h3>Current Time: ${now}</h3>
             </div>
             <div class="list">
@@ -62,6 +63,7 @@
             </div>
         </div>
         <g:javascript src="jquery.countdown.js" plugin="quartz-monitor"/>
+        <g:javascript src="jquery.clock.js" plugin="quartz-monitor"/>
         <g:javascript src="jquery.color.js" plugin="quartz-monitor"/>
         <g:javascript src="quartz-monitor.js" plugin="quartz-monitor"/>
     </body>

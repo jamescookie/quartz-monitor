@@ -25,6 +25,7 @@ if (jQuery) {
                 if (remaining === "") return;
                 countdown(item, remaining);
             });
+            $('#clock').clock({"timestamp":new Date($('#clock').data('time'))});
 		},
 
         reloadPage = function() {
