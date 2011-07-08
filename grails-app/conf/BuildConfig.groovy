@@ -24,6 +24,9 @@ grails.project.dependency.resolution = {
         //mavenRepo "http://repository.jboss.com/maven2/"
     }
     plugins {
+        build(":release:1.0.0.M3", ":svn:latest.integration") {
+            export = false
+        }
         compile ':quartz:0.4.2'
     }
     dependencies {
@@ -32,3 +35,4 @@ grails.project.dependency.resolution = {
         // runtime 'mysql:mysql-connector-java:5.1.13'
     }
 }
+grails.release.scm.enabled = false

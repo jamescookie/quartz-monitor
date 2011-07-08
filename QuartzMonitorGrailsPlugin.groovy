@@ -17,6 +17,9 @@ One clear and concise page that enables you to administer all your Quartz jobs.
 
     def documentation = "http://grails.org/plugin/quartz-monitor"
 
+    def license = "APACHE"
+    def scm = [ url: "http://github.com/jamescookie/quartz-monitor" ]
+
     def doWithSpring = {
         quartzJobFactory(QuartzMonitorJobFactory) {
             sessionFactory = ref("sessionFactory")

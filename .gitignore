@@ -2,3 +2,6 @@ target
 *.iws
 *.ipr
 *.iml
+*.zip
+plugin.xml
+
