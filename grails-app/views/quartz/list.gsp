@@ -28,7 +28,8 @@
                             <th>Last Run</th>
                             <th class="quartz-to-hide">Result</th>
                             <th>Next Scheduled Run</th>
-                            <th>Actions</th>
+                            <th style="width: 100px;">Actions</th>
+							<th style="width: 300px;">Rescheduling</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -56,6 +57,18 @@
                                     <a href="<g:createLink action="runNow" params="[jobName:job.name, jobGroup:job.group]"/>"><img class="quartz-tooltip" data-tooltip="Run now" src="<g:resource dir="images" file="run.png" plugin="quartz-monitor"/>"></a>
                                 </g:if>
                             </td>
+							<td>
+								<g:form name="cronForm" action="reschedule">
+									<g:if test="${job.trigger instanceof org.quartz.CronTrigger}">
+										<g:hiddenField name="jobName" value="${job.name}"/>
+										<g:hiddenField name="jobGroup" value="${job.group}"/>
+										<g:hiddenField name="triggerName" value="${job.trigger.name}"/>
+										<g:hiddenField name="triggerGroup" value="${job.trigger.group}"/>
+										<g:textField name="cronexpression" value="${job.trigger.getCronExpression()}"/>
+										<g:submitButton name="btnSubmit" value="Reschedule Cron Trigger"/>
+									</g:if>
+								</g:form>
+							</td>
                         </tr>
                     </g:each>
                     </tbody>
