@@ -66,7 +66,11 @@ environments {
 
 }
 
-quartz.showTriggerName = true
+quartz {
+    monitor {
+        showTriggerNames = false
+    }
+}
 
 // log4j configuration
 log4j = {

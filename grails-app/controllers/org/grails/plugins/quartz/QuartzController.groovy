@@ -22,8 +22,6 @@ class QuartzController {
                     triggers.each {trigger ->
                         def currentJob = createJob(jobGroup, jobName, jobsList)
                         currentJob.trigger = trigger
-                        currentJob.triggerName = trigger.name
-                        currentJob.triggerGroup = trigger.group
                         def state = quartzScheduler.getTriggerState(trigger.name, trigger.group)
                         currentJob.triggerStatus = TriggerState.find {
                             it.value() == state

@@ -13,7 +13,15 @@
             <span class="menuButton"><a class="home" href="${createLink(uri: '/')}"><g:message code="default.home.label"/></a></span>
         </div>
         <div class="body">
-            <h1>Quartz Jobs</h1>
+            <h1 id="quartz-title">
+                Quartz Jobs
+                <g:if test="${scheduler.isInStandbyMode()}">
+                    <a href="<g:createLink action="startScheduler"/>"><img class="quartz-tooltip" data-tooltip="Start scheduler" src="<g:resource dir="images" file="play-all.png" plugin="quartz-monitor"/>"></a>
+                </g:if>
+                <g:else>
+                    <a href="<g:createLink action="stopScheduler"/>"><img class="quartz-tooltip" data-tooltip="Pause scheduler" src="<g:resource dir="images" file="pause-all.png" plugin="quartz-monitor"/>"></a>
+                </g:else>
+            </h1>
             <g:if test="${flash.message}">
             <div class="message">${flash.message}</div>
             </g:if>
@@ -24,10 +32,10 @@
                 <table id="quartz-jobs">
                     <thead>
                         <tr>
-                            <g:if test="${grailsApplication.config.quartz.showTriggerName}">
-                              <th>TriggerName</th>
-                            </g:if>
                             <th>Name</th>
+                            <g:if test="${grailsApplication.config.quartz.monitor.showTriggerNames}">
+                                <th>Trigger Name</th>
+                            </g:if>
                             <th>Last Run</th>
                             <th class="quartz-to-hide">Result</th>
                             <th>Next Scheduled Run</th>
@@ -37,14 +45,19 @@
                     <tbody>
                     <g:each in="${jobs}" status="i" var="job">
                         <tr class="${(i % 2) == 0 ? 'odd' : 'even'}">
-                            <g:if test="${grailsApplication.config.quartz.showTriggerName}">
-                              <td>${job.trigger?.name}</td>
-                            </g:if>
                             <td>${job.name}</td>
+                            <g:if test="${grailsApplication.config.quartz.monitor.showTriggerNames}">
+                                <td>${job.trigger?.name}</td>
+                            </g:if>
                             <g:set var="tooltip">${job.duration >= 0 ? "Job ran in: " + job.duration + "ms" : (job.error ? "Job threw exception: " + job.error : "")}</g:set>
                             <td class="quartz-tooltip quartz-status ${job.status?:"not-run"}" data-tooltip="${tooltip}">${job.lastRun}</td>
                             <td class="quartz-to-hide">${tooltip}</td>
-                            <td class="quartz-countdown" data-next-run="${job.trigger?.nextFireTime?.time ?: ""}">${job.trigger?.nextFireTime}</td>
+                            <g:if test="${scheduler.isInStandbyMode() || job.triggerStatus == TriggerState.PAUSED}">
+                                <td class="hasCountdown countdown_amount">Paused</td>
+                            </g:if>
+                            <g:else>
+                                <td class="quartz-countdown" data-next-run="${job.trigger?.nextFireTime?.time ?: ""}">${job.trigger?.nextFireTime}</td>
+                            </g:else>
                             <td class="quartz-actions">
                                 <g:if test="${job.status != 'running'}">
                                     <g:if test="${job.trigger}">
@@ -66,16 +79,6 @@
                     </g:each>
                     </tbody>
                 </table>
-            </div>
-            <br>
-            <div id="scheduler-options">
-              <g:if test="${scheduler.isInStandbyMode()}">
-                <g:link action="startScheduler">Start scheduler now</g:link>
-              </g:if>
-              <g:else>
-                <g:link action="stopScheduler">Set scheduler in standBy mode</g:link>
-              </g:else>
-
             </div>
         </div>
         <g:javascript src="jquery.countdown.js" plugin="quartz-monitor"/>
