@@ -1,6 +1,8 @@
 package org.grails.plugins.quartz
 
 import org.quartz.Scheduler
+import org.quartz.CronExpression
+import org.quartz.CronTrigger
 
 class QuartzController {
     static final Map triggers = [:]
@@ -73,5 +75,16 @@ class QuartzController {
         quartzScheduler.triggerJob(params.jobName, params.jobGroup, null)
         redirect(action: "list")
     }
+
+	def reschedule = {
+		try {
+			CronTrigger trigger = quartzScheduler.getTrigger(params.triggerName, params.triggerGroup)
+			trigger.setCronExpression(params.cronexpression)
+			quartzScheduler.rescheduleJob(params.triggerName, params.triggerGroup, trigger);
+		} catch(Exception ex) {
+			flash.message = "cron expression (${params.cronexpression}) was not correct"
+		}
+		redirect(action: "list")
+	}
 
 }
