@@ -34,7 +34,7 @@ class QuartzController {
                 }
             }
         }
-        [jobs:jobsList, now:new Date()]
+        [jobs:jobsList, now:new Date(), scheduler: quartzScheduler]
     }
 
     private def createJob(String jobGroup, String jobName, ArrayList jobsList) {
@@ -71,6 +71,16 @@ class QuartzController {
 
     def runNow = {
         quartzScheduler.triggerJob(params.jobName, params.jobGroup, null)
+        redirect(action: "list")
+    }
+
+    def startScheduler = {
+        quartzScheduler.start()
+        redirect(action: "list")
+    }
+
+    def stopScheduler = {
+        quartzScheduler.standby()
         redirect(action: "list")
     }
 
