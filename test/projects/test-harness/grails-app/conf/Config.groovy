@@ -69,6 +69,8 @@ environments {
 quartz {
     monitor {
         showTriggerNames = false
+        showCountdown = true
+        showTickingClock = true
     }
 }
 

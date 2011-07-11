@@ -81,9 +81,13 @@
                 </table>
             </div>
         </div>
-        <g:javascript src="jquery.countdown.js" plugin="quartz-monitor"/>
-        <g:javascript src="jquery.clock.js" plugin="quartz-monitor"/>
-        <g:javascript src="jquery.color.js" plugin="quartz-monitor"/>
+        <g:unless test="${grailsApplication.config.quartz.monitor.showCountdown == false}">
+            <g:javascript src="jquery.countdown.js" plugin="quartz-monitor"/>
+            <g:javascript src="jquery.color.js" plugin="quartz-monitor"/>
+        </g:unless>
+        <g:unless test="${grailsApplication.config.quartz.monitor.showTickingClock == false}">
+            <g:javascript src="jquery.clock.js" plugin="quartz-monitor"/>
+        </g:unless>
         <g:javascript src="quartz-monitor.js" plugin="quartz-monitor"/>
     </body>
 </html>
