@@ -24,6 +24,9 @@
                 <table id="quartz-jobs">
                     <thead>
                         <tr>
+                            <g:if test="${grailsApplication.config.quartz.showTriggerName}">
+                              <th>TriggerName</th>
+                            </g:if>
                             <th>Name</th>
                             <th>Last Run</th>
                             <th class="quartz-to-hide">Result</th>
@@ -34,6 +37,9 @@
                     <tbody>
                     <g:each in="${jobs}" status="i" var="job">
                         <tr class="${(i % 2) == 0 ? 'odd' : 'even'}">
+                            <g:if test="${grailsApplication.config.quartz.showTriggerName}">
+                              <td>${job.trigger?.name}</td>
+                            </g:if>
                             <td>${job.name}</td>
                             <g:set var="tooltip">${job.duration >= 0 ? "Job ran in: " + job.duration + "ms" : (job.error ? "Job threw exception: " + job.error : "")}</g:set>
                             <td class="quartz-tooltip quartz-status ${job.status?:"not-run"}" data-tooltip="${tooltip}">${job.lastRun}</td>
@@ -60,6 +66,16 @@
                     </g:each>
                     </tbody>
                 </table>
+            </div>
+            <br>
+            <div id="scheduler-options">
+              <g:if test="${scheduler.isInStandbyMode()}">
+                <g:link action="startScheduler">Start scheduler now</g:link>
+              </g:if>
+              <g:else>
+                <g:link action="stopScheduler">Set scheduler in standBy mode</g:link>
+              </g:else>
+
             </div>
         </div>
         <g:javascript src="jquery.countdown.js" plugin="quartz-monitor"/>
