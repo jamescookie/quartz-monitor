@@ -25,8 +25,14 @@ if (jQuery) {
                 if (remaining === "") return;
                 countdown(item, remaining);
             });
-            $('#clock').clock({"timestamp":new Date($('#clock').data('time'))});
+           displayClock($('#clock'));
 		},
+
+        displayClock = function(item) {
+            if (item.clock !== undefined) {
+                item.clock({"timestamp":new Date(item.data('time'))});
+            }
+        },
 
         reloadPage = function() {
             var original = $(this).css('color');
@@ -55,11 +61,13 @@ if (jQuery) {
         },
 
         countdown = function(item, remaining) {
-            item.countdown(
-               {until: new Date(remaining),
-                   onExpiry: reloadPage,
-                   compact: true
-               });
+            if (item.countdown !== undefined) {
+                item.countdown(
+                   {until: new Date(remaining),
+                       onExpiry: reloadPage,
+                       compact: true
+                   });
+            }
         },
 
         displayToolTip = function(tooltipData, x, y) {
