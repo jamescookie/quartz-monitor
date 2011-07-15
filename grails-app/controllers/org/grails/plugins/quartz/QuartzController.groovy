@@ -20,7 +20,7 @@ class QuartzController {
                 def triggers = quartzScheduler.getTriggersOfJob(jobName, jobGroup)
                 if (triggers) {
                     triggers.each {trigger ->
-                        def currentJob = createJob(jobGroup, jobName, jobsList)
+                        def currentJob = createJob(jobGroup, jobName, jobsList, trigger.name)
                         currentJob.trigger = trigger
                         currentJob.triggerName = trigger.name
                         currentJob.triggerGroup = trigger.group
@@ -37,11 +37,11 @@ class QuartzController {
         [jobs:jobsList, now:new Date(), scheduler: quartzScheduler]
     }
 
-    private def createJob(String jobGroup, String jobName, ArrayList jobsList) {
+    private def createJob(String jobGroup, String jobName, ArrayList jobsList, triggerName = "") {
         def currentJob = [:]
         currentJob.group = jobGroup
         currentJob.name = jobName
-        def map = QuartzMonitorJobFactory.jobRuns.get(jobName)
+        def map = QuartzMonitorJobFactory.jobRuns.get(triggerName)
         if (map) currentJob << map
         jobsList.add(currentJob)
         return currentJob
