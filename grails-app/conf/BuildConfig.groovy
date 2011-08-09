@@ -27,6 +27,7 @@ grails.project.dependency.resolution = {
         build(":release:1.0.0.M3", ":svn:latest.integration") {
             export = false
         }
+        runtime ':quartz:0.4.2'
         compile ':quartz:0.4.2'
     }
     dependencies {
