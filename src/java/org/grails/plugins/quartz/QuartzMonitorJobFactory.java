@@ -26,7 +26,8 @@ public class QuartzMonitorJobFactory extends GrailsJobFactory {
     }
 
     protected Object createJobInstance(TriggerFiredBundle bundle) throws Exception {
-        String grailsJobName = bundle.getJobDetail().getName();
+        //String grailsJobName = bundle.getJobDetail().getName();
+        String grailsJobName = bundle.getTrigger().getName();
         Object job = super.createJobInstance(bundle);
         if (job instanceof GrailsTaskClassJob) {
             Map<String, Object> map;

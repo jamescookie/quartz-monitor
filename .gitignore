@@ -4,4 +4,4 @@ target
 *.iml
 *.zip
 plugin.xml
-
+.idea
