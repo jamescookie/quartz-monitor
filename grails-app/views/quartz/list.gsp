@@ -2,7 +2,8 @@
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-        <meta name="layout" content="main" />
+        <g:set var="layoutName" value="${grailsApplication.config.quartz?.monitor?.layout}" />
+        <meta name="layout" content="${layoutName ?: 'main'}" />
         <title>Quartz Jobs</title>
         <link rel="stylesheet" href="${resource(dir: 'css', file: 'quartz-monitor.css', plugin: 'quartz-monitor')}"/>
         <link rel="stylesheet" href="${resource(dir: 'css', file: 'jquery.countdown.css', plugin: 'quartz-monitor')}"/>
