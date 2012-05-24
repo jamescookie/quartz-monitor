@@ -24,7 +24,7 @@ There are various configuration options, all start with quartz.monitor:
 
 ###layout
 
-Allow you to change the sitemesh layout that page will use. Defaults to 'main'.
+Allows you to change the sitemesh layout that page will use. Defaults to 'main'.
 
 ###showTriggerNames
 

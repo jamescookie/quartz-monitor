@@ -13,6 +13,7 @@ grails.project.dependency.resolution = {
         grailsPlugins()
         grailsHome()
         grailsCentral()
+        grailsRepo "http://grails.org/plugins"
 
         // uncomment the below to enable remote dependency resolution
         // from public Maven repositories
@@ -24,11 +25,17 @@ grails.project.dependency.resolution = {
         //mavenRepo "http://repository.jboss.com/maven2/"
     }
     plugins {
-        build(":release:1.0.0.M3", ":svn:latest.integration") {
+        build(":release:2.0.2") {
             export = false
         }
         runtime ':quartz:0.4.2'
         compile ':quartz:0.4.2'
+        compile(':rest-client-builder:1.0.2') {
+            export = false
+        }
+        compile(":hibernate:$grailsVersion") {
+            export = false
+        }
     }
     dependencies {
         // specify dependencies here under either 'build', 'compile', 'runtime', 'test' or 'provided' scopes eg.

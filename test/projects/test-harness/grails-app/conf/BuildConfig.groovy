@@ -28,6 +28,12 @@ grails.project.dependency.resolution = {
 
         // runtime 'mysql:mysql-connector-java:5.1.13'
     }
+    plugins {
+        runtime ":hibernate:$grailsVersion"
+        runtime ":tomcat:$grailsVersion"
+        runtime ':jquery:1.6.1.1'
+        runtime ':quartz:0.4.2'
+    }
 }
 
 grails.plugin.location."quartz-monitor" = "../../.."
