@@ -1,15 +1,16 @@
 package org.grails.plugins.quartz;
 
-import org.codehaus.groovy.grails.plugins.quartz.GrailsJobFactory;
+import grails.plugins.quartz.GrailsJobFactory;
+
+import java.util.Date;
+import java.util.HashMap;
+import java.util.Map;
+
 import org.hibernate.SessionFactory;
 import org.quartz.Job;
 import org.quartz.JobExecutionContext;
 import org.quartz.JobExecutionException;
 import org.quartz.spi.TriggerFiredBundle;
-
-import java.util.Date;
-import java.util.HashMap;
-import java.util.Map;
 
 /**
  * Job factory which enhances GrailsJobFactory.
@@ -29,7 +30,7 @@ public class QuartzMonitorJobFactory extends GrailsJobFactory {
         //String grailsJobName = bundle.getJobDetail().getName();
         String grailsJobName = bundle.getTrigger().getName();
         Object job = super.createJobInstance(bundle);
-        if (job instanceof GrailsTaskClassJob) {
+        if (job instanceof GrailsJob) {
             Map<String, Object> map;
             if (jobRuns.containsKey(grailsJobName)) {
                 map = jobRuns.get(grailsJobName);
@@ -37,7 +38,7 @@ public class QuartzMonitorJobFactory extends GrailsJobFactory {
                 map = new HashMap<String, Object>();
                 jobRuns.put(grailsJobName, map);
             }
-            job = new QuartzDisplayJob((GrailsTaskClassJob) job, map, sessionFactory);
+            job = new QuartzDisplayJob((GrailsJob) job, map, sessionFactory);
         }
         return job;
     }
@@ -46,11 +47,11 @@ public class QuartzMonitorJobFactory extends GrailsJobFactory {
      * Quartz Job implementation that invokes execute() on the GrailsTaskClassJob instance whilst recording the time
      */
     public class QuartzDisplayJob implements Job {
-        GrailsTaskClassJob job;
+        GrailsJob job;
         Map<String, Object> jobDetails;
         private SessionFactory sessionFactory;
 
-        public QuartzDisplayJob(GrailsTaskClassJob job, Map<String, Object> jobDetails, SessionFactory sessionFactory) {
+        public QuartzDisplayJob(GrailsJob job, Map<String, Object> jobDetails, SessionFactory sessionFactory) {
             this.job = job;
             this.jobDetails = jobDetails;
             this.sessionFactory = sessionFactory;
