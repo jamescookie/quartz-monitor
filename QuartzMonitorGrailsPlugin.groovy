@@ -3,7 +3,7 @@ import org.grails.plugins.quartz.QuartzMonitorJobFactory
 class QuartzMonitorGrailsPlugin {
     def version = "0.2"
     def grailsVersion = "2.0 > *"
-    def dependsOn = [quartz:"1.0-RC2"]
+    def dependsOn = [quartz:"1.0-RC4"]
     def pluginExcludes = [
             "grails-app/views/error.gsp"
     ]

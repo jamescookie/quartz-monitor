@@ -27,16 +27,15 @@ public class QuartzMonitorJobFactory extends GrailsJobFactory {
     }
 
     protected Object createJobInstance(TriggerFiredBundle bundle) throws Exception {
-        //String grailsJobName = bundle.getJobDetail().getName();
-        String grailsJobName = bundle.getTrigger().getName();
+        String uniqueTriggerName = bundle.getTrigger().getKey().getName();
         Object job = super.createJobInstance(bundle);
         if (job instanceof GrailsJob) {
             Map<String, Object> map;
-            if (jobRuns.containsKey(grailsJobName)) {
-                map = jobRuns.get(grailsJobName);
+            if (jobRuns.containsKey(uniqueTriggerName)) {
+                map = jobRuns.get(uniqueTriggerName);
             } else {
                 map = new HashMap<String, Object>();
-                jobRuns.put(grailsJobName, map);
+                jobRuns.put(uniqueTriggerName, map);
             }
             job = new QuartzDisplayJob((GrailsJob) job, map, sessionFactory);
         }

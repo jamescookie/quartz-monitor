@@ -5,7 +5,7 @@ class TestFailingJob {
     def startDelay = 30000
 
     def execute() {
-        println "running fail job ${Domain2.count()}"
+        println "running TestFailingJob: ${Domain2.count()}"
         if (Domain2.count() > 0) {
             Domain2.list()*.delete()
         }
