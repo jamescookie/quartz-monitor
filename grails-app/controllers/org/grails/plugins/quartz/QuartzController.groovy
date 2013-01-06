@@ -2,13 +2,13 @@ package org.grails.plugins.quartz
 
 import org.quartz.Scheduler
 import org.quartz.Trigger
+import org.quartz.impl.matchers.GroupMatcher
 
 import static org.quartz.impl.matchers.GroupMatcher.jobGroupEquals
 
 class QuartzController {
-    static final Map triggers = [:]
+    static final Map<String, Trigger> triggers = [:]
 
-    def jobManagerService
     Scheduler quartzScheduler
 
     def index = {
@@ -27,8 +27,8 @@ class QuartzController {
                         def currentJob = createJob(jobGroup, jobName, jobsList, trigger.key.name)
                         currentJob.trigger = trigger
                         def state = quartzScheduler.getTriggerState(trigger.key)
-                        currentJob.triggerStatus = TriggerState.find {
-                            it.value() == state
+                        currentJob.triggerStatus = Trigger.TriggerState.find {
+                            it == state
                         } ?: "UNKNOWN"
                     }
                 } else {
@@ -49,32 +49,65 @@ class QuartzController {
         return currentJob
     }
 
-//    def stop = {
-//        triggers.put(params.jobName, quartzScheduler.getTrigger(params.triggerName, params.triggerGroup))
-//        quartzScheduler.unscheduleJob(params.triggerName, params.triggerGroup)
-//        redirect(action: "list")
-//    }
-//
-//    def start = {
-//        def trigger = triggers.get(params.jobName)
-//        quartzScheduler.scheduleJob(trigger)
-//        redirect(action: "list")
-//    }
-//
-//    def pause = {
-//        quartzScheduler.pauseJob(params.jobName, params.jobGroup)
-//        redirect(action: "list")
-//    }
-//
-//    def resume = {
-//        quartzScheduler.resumeJob(params.jobName, params.jobGroup)
-//        redirect(action: "list")
-//    }
-//
-//    def runNow = {
-//        quartzScheduler.triggerJob(params.jobName, params.jobGroup, null)
-//        redirect(action: "list")
-//    }
+    def stop = {
+        def triggerKeys = quartzScheduler.getTriggerKeys(GroupMatcher.triggerGroupEquals(params.triggerGroup))
+        def key = triggerKeys?.find {it.name == params.triggerName}
+        if (key) {
+            def trigger = quartzScheduler.getTrigger(key)
+            if (trigger) {
+                triggers.put(params.jobName, trigger)
+                quartzScheduler.unscheduleJob(key)
+            } else {
+                flash.message = "No trigger could be found for $key"
+            }
+        } else {
+            flash.message = "No trigger key could be found for $params.triggerGroup : $params.triggerName"
+        }
+        redirect(action: "list")
+    }
+
+    def start = {
+        def trigger = triggers.get(params.jobName)
+        if (trigger) {
+            quartzScheduler.scheduleJob(trigger)
+        } else {
+            flash.message = "No trigger could be found for $params.jobName"
+        }
+        redirect(action: "list")
+    }
+
+    def pause = {
+        def jobKeys = quartzScheduler.getJobKeys(GroupMatcher.jobGroupEquals(params.jobGroup))
+        def key = jobKeys?.find {it.name == params.jobName}
+        if (key) {
+            quartzScheduler.pauseJob(key)
+        } else {
+            flash.message = "No job key could be found for $params.jobGroup : $params.jobName"
+        }
+        redirect(action: "list")
+    }
+
+    def resume = {
+        def jobKeys = quartzScheduler.getJobKeys(GroupMatcher.jobGroupEquals(params.jobGroup))
+        def key = jobKeys?.find {it.name == params.jobName}
+        if (key) {
+            quartzScheduler.resumeJob(key)
+        } else {
+            flash.message = "No job key could be found for $params.jobGroup : $params.jobName"
+        }
+        redirect(action: "list")
+    }
+
+    def runNow = {
+        def jobKeys = quartzScheduler.getJobKeys(GroupMatcher.jobGroupEquals(params.jobGroup))
+        def key = jobKeys?.find {it.name == params.jobName}
+        if (key) {
+            quartzScheduler.triggerJob(key)
+        } else {
+            flash.message = "No job key could be found for $params.jobGroup : $params.jobName"
+        }
+        redirect(action: "list")
+    }
 
     def startScheduler = {
         quartzScheduler.start()

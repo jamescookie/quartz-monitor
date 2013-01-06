@@ -1,4 +1,4 @@
-<%@ page import="org.grails.plugins.quartz.TriggerState" %>
+<%@ page import="org.quartz.Trigger" %>
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
@@ -53,7 +53,7 @@
                             <g:set var="tooltip">${job.duration >= 0 ? "Job ran in: " + job.duration + "ms" : (job.error ? "Job threw exception: " + job.error : "")}</g:set>
                             <td class="quartz-tooltip quartz-status ${job.status?:"not-run"}" data-tooltip="${tooltip}">${job.lastRun}</td>
                             <td class="quartz-to-hide">${tooltip}</td>
-                            <g:if test="${scheduler.isInStandbyMode() || job.triggerStatus == TriggerState.PAUSED}">
+                            <g:if test="${scheduler.isInStandbyMode() || job.triggerStatus == Trigger.TriggerState.PAUSED}">
                                 <td class="hasCountdown countdown_amount">Paused</td>
                             </g:if>
                             <g:else>
@@ -63,7 +63,7 @@
                                 <g:if test="${job.status != 'running'}">
                                     <g:if test="${job.trigger}">
                                         <a href="<g:createLink action="stop" params="[jobName:job.name, triggerName:job.trigger.name, triggerGroup:job.trigger.group]"/>"><img class="quartz-tooltip" data-tooltip="Stop job from running again" src="<g:resource dir="images" file="stop.png" plugin="quartz-monitor"/>"></a>
-                                        <g:if test="${job.triggerStatus == TriggerState.PAUSED}">
+                                        <g:if test="${job.triggerStatus == Trigger.TriggerState.PAUSED}">
                                             <a href="<g:createLink action="resume" params="[jobName:job.name, jobGroup:job.group]"/>"><img class="quartz-tooltip" data-tooltip="Resume job schedule" src="<g:resource dir="images" file="resume.png" plugin="quartz-monitor"/>"></a>
                                         </g:if>
                                         <g:elseif test="${job.trigger.mayFireAgain()}">
