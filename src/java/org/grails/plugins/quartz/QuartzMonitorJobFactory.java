@@ -63,7 +63,9 @@ public class QuartzMonitorJobFactory extends GrailsJobFactory {
             long start = System.currentTimeMillis();
             try {
                 job.execute(context);
-                sessionFactory.getCurrentSession().flush();
+                if (job.job.sessionRequired) {
+                    sessionFactory.getCurrentSession().flush();
+                }
             } catch (Throwable e) {
                 jobDetails.put("error", e.getMessage());
                 jobDetails.put("status", "error");
