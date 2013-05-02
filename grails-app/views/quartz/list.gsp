@@ -74,6 +74,9 @@
                                         <a href="<g:createLink action="start" params="[jobName:job.name, jobGroup:job.group]"/>"><img class="quartz-tooltip" data-tooltip="Start job schedule" src="<g:resource dir="images" file="start.png" plugin="quartz-monitor"/>"></a>
                                     </g:else>
                                     <a href="<g:createLink action="runNow" params="[jobName:job.name, jobGroup:job.group]"/>"><img class="quartz-tooltip" data-tooltip="Run now" src="<g:resource dir="images" file="run.png" plugin="quartz-monitor"/>"></a>
+                                    <g:if test="${job.trigger instanceof org.quartz.CronTrigger}">
+                                        <a href="<g:createLink action="editCronTrigger" params="[triggerName:job.trigger.name, triggerGroup:job.trigger.group]"/>"><img class="quartz-tooltip" data-tooltip="Reschedule" src="<g:resource dir="images" file="reschedule.png" plugin="quartz-monitor"/>"></a>
+                                    </g:if>
                                 </g:if>
                             </td>
                         </tr>
