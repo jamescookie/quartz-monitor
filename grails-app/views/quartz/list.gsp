@@ -75,7 +75,15 @@
                                     </g:else>
                                     <a href="<g:createLink action="runNow" params="[jobName:job.name, jobGroup:job.group]"/>"><img class="quartz-tooltip" data-tooltip="Run now" src="<g:resource dir="images" file="run.png" plugin="quartz-monitor"/>"></a>
                                     <g:if test="${job.trigger instanceof org.quartz.CronTrigger}">
-                                        <a href="<g:createLink action="editCronTrigger" params="[triggerName:job.trigger.name, triggerGroup:job.trigger.group]"/>"><img class="quartz-tooltip" data-tooltip="Reschedule" src="<g:resource dir="images" file="reschedule.png" plugin="quartz-monitor"/>"></a>
+                                        <a class="reschedule" href="<g:createLink action="editCronTrigger" params="[triggerName:job.trigger.name, triggerGroup:job.trigger.group]"/>"><img class="quartz-tooltip" data-tooltip="Reschedule" src="<g:resource dir="images" file="reschedule.png" plugin="quartz-monitor"/>"></a>
+                                        <div class="reschedulePopup" style="display:none">
+                                            <g:form action="saveCronTrigger">
+                                            <g:hiddenField name="triggerName" value="${job.trigger.name}"/>
+                                            <g:hiddenField name="triggerGroup" value="${job.trigger.group}"/>
+                                            Cron Expression:
+                                            <g:textField name="cronexpression" value="${job.trigger.getCronExpression()}"/>
+                                            </g:form>
+                                        </div>
                                     </g:if>
                                 </g:if>
                             </td>
