@@ -5,6 +5,7 @@ if (jQuery) {
 		yOffset = 20,
         init = function() {
             $('.quartz-to-hide').hide();
+            $('body').data('reschedulePopupOpen', false);
 			$('.quartz-tooltip')
                 .hover(function(e){
                     var tooltipData = $(this).data('tooltip');
@@ -26,6 +27,30 @@ if (jQuery) {
                 countdown(item, remaining);
             });
            displayClock($('#clock'));
+           if (jQuery.ui) {
+               $(".reschedule").click(function(e) {
+                   e.preventDefault();
+                   $(this).next().dialog({
+                       modal: true,
+                       title: "Reschedule Trigger",
+                       buttons: {
+                           "Reschedule": function() {
+                               $(this).find('form').submit();
+                           },
+                           "Cancel": function() {
+                               $(this).dialog("close");
+                           }
+                       },
+                       open: function(event,ui) {
+                           $('body').data('reschedulePopupOpen', true);
+                       },
+                       close: function(event,ui) {
+                           $('body').data('reschedulePopupOpen', false);
+                           location.reload(true);
+                       }
+                   });
+               });
+           }
 		},
 
         displayClock = function(item) {
@@ -64,7 +89,11 @@ if (jQuery) {
             if (item.countdown !== undefined) {
                 item.countdown(
                    {until: new Date(remaining),
-                       onExpiry: reloadPage,
+                       onExpiry: function() {
+                           if ($("body").data("reschedulePopupOpen") == false) {
+                               reloadPage.call($(this));
+                           }
+                       },
                        compact: true
                    });
             }
