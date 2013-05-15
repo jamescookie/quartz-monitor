@@ -1,3 +1,3 @@
-git remote add %0 https://github.com/%0/quartz-monitor.git
-git remote -v
-git fetch %0
+call git remote add %1 https://github.com/%1/quartz-monitor.git
+call git remote -v
+call git fetch %1

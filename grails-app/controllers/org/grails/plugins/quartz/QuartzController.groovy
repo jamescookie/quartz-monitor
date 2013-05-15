@@ -4,7 +4,6 @@ import org.quartz.Scheduler
 import org.quartz.Trigger
 import org.quartz.impl.matchers.GroupMatcher
 import org.quartz.TriggerKey
-import org.quartz.CronExpression
 import org.quartz.CronTrigger
 
 import static org.quartz.impl.matchers.GroupMatcher.jobGroupEquals
@@ -139,7 +138,7 @@ class QuartzController {
             return
         }
 
-        CronTrigger trigger = quartzScheduler.getTrigger(new TriggerKey(params.triggerName, params.triggerGroup))
+        CronTrigger trigger = quartzScheduler.getTrigger(new TriggerKey(params.triggerName, params.triggerGroup)) as CronTrigger
         if (!trigger) {
             flash.message = "No such trigger"
             redirect(action: "list")
@@ -149,8 +148,8 @@ class QuartzController {
         try {
             trigger.setCronExpression(params.cronexpression)
             quartzScheduler.rescheduleJob(new TriggerKey(params.triggerName, params.triggerGroup), trigger);
-        } catch(Exception ex) {
-            flash.message = "cron expression (${params.cronexpression}) was not correct"
+        } catch (Exception ex) {
+            flash.message = "cron expression (${params.cronexpression}) was not correct: $ex"
             render(view: "editCronTrigger", model: [trigger: trigger])
             return
         }
