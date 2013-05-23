@@ -1,4 +1,4 @@
-package org.grails.plugins.quartz
+package grails.plugins.quartz
 
 import org.quartz.Scheduler
 import org.quartz.Trigger

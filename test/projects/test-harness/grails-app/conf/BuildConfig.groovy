@@ -32,7 +32,7 @@ grails.project.dependency.resolution = {
         runtime ":hibernate:$grailsVersion"
         runtime ":tomcat:$grailsVersion"
         runtime ':jquery:1.6.1.1'
-        runtime ':quartz:1.0-RC4'
+        runtime ':quartz:1.0-RC7'
     }
 }
 
