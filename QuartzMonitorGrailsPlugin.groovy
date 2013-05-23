@@ -1,4 +1,4 @@
-import org.grails.plugins.quartz.QuartzMonitorJobFactory
+import grails.plugins.quartz.QuartzMonitorJobFactory
 
 class QuartzMonitorGrailsPlugin {
     def version = "0.3-RC1"

@@ -1,4 +1,4 @@
-package org.grails.plugins.quartz
+package grails.plugins.quartz
 
 enum TriggerState {
     BLOCKED(4), COMPLETE(2), ERROR(3), NONE(-1), NORMAL(0), PAUSED(1)
