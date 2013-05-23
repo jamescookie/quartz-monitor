@@ -25,7 +25,7 @@ grails.project.dependency.resolution = {
         //mavenRepo "http://repository.jboss.com/maven2/"
     }
     plugins {
-        build(":release:2.0.2") {
+        build(":release:2.0.3") {
             export = false
         }
         runtime ':quartz:1.0-RC4'
