@@ -22,7 +22,9 @@ One clear and concise page that enables you to administer all your Quartz jobs.
 
     def doWithSpring = {
         quartzJobFactory(QuartzMonitorJobFactory) {
-            sessionFactory = ref("sessionFactory")
+            if (manager?.hasGrailsPlugin("hibernate")) {
+                sessionFactory = ref("sessionFactory")
+            }
         }
     }
 }

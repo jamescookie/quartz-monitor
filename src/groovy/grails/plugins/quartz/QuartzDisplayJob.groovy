@@ -4,7 +4,6 @@ import org.quartz.Job
 import org.hibernate.SessionFactory
 import org.quartz.JobExecutionContext
 import org.quartz.JobExecutionException
-import org.springframework.orm.hibernate3.SessionFactoryUtils
 
 /**
  * Quartz Job implementation that invokes execute() on the GrailsTaskClassJob instance whilst recording the time
@@ -28,7 +27,7 @@ public class QuartzDisplayJob implements Job {
         try {
             job.execute(context)
             if (shouldFlushSession(job.job)) {
-                SessionFactoryUtils.getSession(sessionFactory, false)?.flush()
+                org.springframework.orm.hibernate3.SessionFactoryUtils.getSession(sessionFactory, false)?.flush()
             }
         } catch (Throwable e) {
             jobDetails.put("error", e.message)
@@ -43,7 +42,7 @@ public class QuartzDisplayJob implements Job {
     }
 
     private boolean shouldFlushSession(job) {
-        boolean shouldFlush = true
+        boolean shouldFlush = sessionFactory != null
         if (job.metaClass.hasProperty(job, 'sessionRequired') && job.sessionRequired == false) {
             shouldFlush = false
         }
