@@ -68,7 +68,11 @@ class QuartzController {
     }
 
     def runNow = {
-        quartzScheduler.triggerJob(params.jobName, params.jobGroup, null)
+        if(quartzScheduler.getJobDetail(params.jobName, params.jobGroup)?.isVolatile()) {
+            quartzScheduler.triggerJobWithVolatileTrigger(params.jobName, params.jobGroup, null)
+        } else {
+            quartzScheduler.triggerJob(params.jobName, params.jobGroup, null)
+        }
         redirect(action: "list")
     }
 
