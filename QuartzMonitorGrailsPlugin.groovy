@@ -1,7 +1,7 @@
 import grails.plugins.quartz.QuartzMonitorJobFactory
 
 class QuartzMonitorGrailsPlugin {
-    def version = "0.3-RC2"
+    def version = "0.3-RC3"
     def grailsVersion = "1.2 > *"
     def loadAfter = ['quartz']
     def pluginExcludes = [
