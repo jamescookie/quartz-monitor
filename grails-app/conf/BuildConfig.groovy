@@ -34,7 +34,7 @@ grails.project.dependency.resolution = {
             export = false
         }
         compile ':quartz:1.0.1'
-        build(':release:2.1.0', ':rest-client-builder:1.0.3') {
+        build(':release:3.0.1', ':rest-client-builder:2.0.0') {
             export = false
         }
     }
