@@ -2,8 +2,7 @@ import grails.plugins.quartz.QuartzMonitorJobFactory
 
 class QuartzMonitorGrailsPlugin {
     def version = "0.3-RC2"
-    def grailsVersion = "1.2 > *"
-    def dependsOn = [quartz:"1.0-RC4"]
+    def grailsVersion = "1.3 > *"
 
     def author = "James Cook"
     def authorEmail = "grails@jamescookie.com"
