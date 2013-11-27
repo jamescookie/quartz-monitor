@@ -7,5 +7,5 @@ enum TriggerState {
 
     private final int value
 
-    public int value() { return value }
+    int value() { value }
 }

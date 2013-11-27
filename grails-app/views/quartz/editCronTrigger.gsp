@@ -1,4 +1,3 @@
-<%@ page import="org.quartz.Trigger" %>
 <html>
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
@@ -24,7 +23,7 @@
                 <div>
                     <label>Cron Expression</label>
                     <span class="required-indicator">*</span>
-                    <g:textField name="cronexpression" value="${trigger.getCronExpression()}"/>
+                    <g:textField name="cronexpression" value="${trigger.cronExpression}"/>
                 </div>
             </fieldset>
             <fieldset class="buttons">
