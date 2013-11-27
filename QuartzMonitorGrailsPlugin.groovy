@@ -13,6 +13,7 @@ class QuartzMonitorGrailsPlugin {
 
     def license = "APACHE"
     def scm = [ url: "http://github.com/jamescookie/quartz-monitor" ]
+    def issueManagement = [ system: "GITHUB", url: "http://github.com/jamescookie/quartz-monitor/issues" ]
 
     def doWithSpring = {
         quartzJobFactory(QuartzMonitorJobFactory) {
