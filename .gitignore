@@ -5,3 +5,5 @@ target
 *.zip
 plugin.xml
 .idea
+*.log
+/web-app/WEB-INF

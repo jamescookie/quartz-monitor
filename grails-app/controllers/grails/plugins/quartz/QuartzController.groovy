@@ -1,12 +1,12 @@
 package grails.plugins.quartz
 
+import static org.quartz.impl.matchers.GroupMatcher.jobGroupEquals
+
+import org.quartz.CronTrigger
 import org.quartz.Scheduler
 import org.quartz.Trigger
-import org.quartz.impl.matchers.GroupMatcher
 import org.quartz.TriggerKey
-import org.quartz.CronTrigger
-
-import static org.quartz.impl.matchers.GroupMatcher.jobGroupEquals
+import org.quartz.impl.matchers.GroupMatcher
 
 class QuartzController {
     static final Map<String, Trigger> triggers = [:]
@@ -19,7 +19,7 @@ class QuartzController {
 
     def list = {
         def jobsList = []
-        def listJobGroups = quartzScheduler.getJobGroupNames()
+        def listJobGroups = quartzScheduler.jobGroupNames
         listJobGroups?.each {jobGroup ->
             quartzScheduler.getJobKeys(jobGroupEquals(jobGroup))?.each {jobKey ->
                 def jobName = jobKey.name
@@ -41,13 +41,11 @@ class QuartzController {
         [jobs: jobsList, now: new Date(), scheduler: quartzScheduler]
     }
 
-    private def createJob(String jobGroup, String jobName, ArrayList jobsList, triggerName = "") {
-        def currentJob = [:]
-        currentJob.group = jobGroup
-        currentJob.name = jobName
-        def map = QuartzMonitorJobFactory.jobRuns.get(triggerName)
+    private createJob(String jobGroup, String jobName, List jobsList, String triggerName = "") {
+        def currentJob = [group: jobGroup, name: jobName]
+        def map = QuartzMonitorJobFactory.jobRuns[triggerName]
         if (map) currentJob << map
-        jobsList.add(currentJob)
+        jobsList << currentJob
         return currentJob
     }
 
@@ -57,7 +55,7 @@ class QuartzController {
         if (key) {
             def trigger = quartzScheduler.getTrigger(key)
             if (trigger) {
-                triggers.put(params.jobName, trigger)
+                triggers[params.jobName] = trigger
                 quartzScheduler.unscheduleJob(key)
             } else {
                 flash.message = "No trigger could be found for $key"
@@ -69,7 +67,7 @@ class QuartzController {
     }
 
     def start = {
-        def trigger = triggers.get(params.jobName)
+        def trigger = triggers[params.jobName]
         if (trigger) {
             quartzScheduler.scheduleJob(trigger)
         } else {
@@ -123,7 +121,7 @@ class QuartzController {
 
     def editCronTrigger = {
         def trigger = quartzScheduler.getTrigger(new TriggerKey(params.triggerName, params.triggerGroup))
-        if (!(trigger instanceof org.quartz.CronTrigger)) {
+        if (!(trigger instanceof CronTrigger)) {
             flash.message = "This trigger is not a cron trigger"
             redirect(action: "list")
             return
@@ -146,8 +144,8 @@ class QuartzController {
         }
 
         try {
-            trigger.setCronExpression(params.cronexpression)
-            quartzScheduler.rescheduleJob(new TriggerKey(params.triggerName, params.triggerGroup), trigger);
+            trigger.cronExpression = params.cronexpression
+            quartzScheduler.rescheduleJob(new TriggerKey(params.triggerName, params.triggerGroup), trigger)
         } catch (Exception ex) {
             flash.message = "cron expression (${params.cronexpression}) was not correct: $ex"
             render(view: "editCronTrigger", model: [trigger: trigger])
@@ -155,5 +153,4 @@ class QuartzController {
         }
         redirect(action: "list")
     }
-
 }
