@@ -1,7 +1,6 @@
 package grails.plugins.quartz
 
 import org.quartz.Job
-import org.hibernate.SessionFactory
 import org.quartz.JobExecutionContext
 import org.quartz.JobExecutionException
 
@@ -11,9 +10,9 @@ import org.quartz.JobExecutionException
 class QuartzDisplayJob implements Job {
     GrailsJobFactory.GrailsJob job
     Map<String, Object> jobDetails
-    private SessionFactory sessionFactory
+    private def sessionFactory
 
-    QuartzDisplayJob(GrailsJobFactory.GrailsJob job, Map<String, Object> jobDetails, SessionFactory sessionFactory) {
+    QuartzDisplayJob(GrailsJobFactory.GrailsJob job, Map<String, Object> jobDetails, def sessionFactory) {
         this.job = job
         this.jobDetails = jobDetails
         this.sessionFactory = sessionFactory
