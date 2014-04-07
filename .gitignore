@@ -7,3 +7,7 @@ plugin.xml
 .idea
 *.log
 /web-app/WEB-INF
+.classpath
+.project
+.settings/*
+target-eclipse/**
