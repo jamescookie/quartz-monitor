@@ -1,7 +1,7 @@
 import grails.plugins.quartz.QuartzMonitorJobFactory
 
 class QuartzMonitorGrailsPlugin {
-    def version = "1.0  "
+    def version = "1.0"
     def grailsVersion = "1.3 > *"
 
     def author = "James Cook"

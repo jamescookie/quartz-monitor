@@ -2,7 +2,9 @@ package test.harness
 
 
 class TestJob {
-    def timeout = 50000l // execute job once in 50 seconds
+    static triggers = {
+        simple repeatInterval: 50000
+    }
 
     def execute() {
         println "running TestJob"
