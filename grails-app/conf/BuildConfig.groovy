@@ -16,11 +16,7 @@ grails.project.dependency.resolution = {
 
     plugins {
 
-        compile ':quartz:1.0-RC4'
-
-        compile(":hibernate:$grailsVersion") {
-            export = false
-        }
+        compile ':quartz:1.0.1'
 
         build ':release:2.2.1', ':rest-client-builder:1.0.3', {
             export = false
