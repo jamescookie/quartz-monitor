@@ -15,6 +15,8 @@ class QuartzMonitorGrailsPlugin {
     def scm = [ url: "http://github.com/jamescookie/quartz-monitor" ]
     def issueManagement = [ system: "GITHUB", url: "http://github.com/jamescookie/quartz-monitor/issues" ]
 
+    def loadAfter = ['quartz']
+
     def doWithSpring = {
         quartzJobFactory(QuartzMonitorJobFactory) {
             if (manager?.hasGrailsPlugin("hibernate")) {

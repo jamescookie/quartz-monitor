@@ -16,6 +16,7 @@ class QuartzMonitorJobFactory extends GrailsJobFactory {
 
     def sessionFactory
 
+    @Override
     protected Object createJobInstance(TriggerFiredBundle bundle) throws Exception {
         String uniqueTriggerName = bundle.trigger.key.name
         Object job = super.createJobInstance(bundle)
