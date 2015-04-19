@@ -11,14 +11,11 @@ grails.project.dependency.resolution = {
         mavenCentral()
     }
 
-    dependencies {
-    }
-
     plugins {
 
         compile ':quartz:1.0.1'
 
-        build ':release:2.2.1', ':rest-client-builder:1.0.3', {
+        build ':release:2.2.1', ':rest-client-builder:2.0.3', {
             export = false
         }
     }

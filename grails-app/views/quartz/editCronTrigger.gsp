@@ -1,8 +1,7 @@
 <html>
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
-    <g:set var="layoutName" value="${grailsApplication.config.quartz?.monitor?.layout}"/>
-    <meta name="layout" content="${layoutName ?: 'main'}"/>
+    <meta name="layout" content="${grailsApplication.config.quartz?.monitor?.layout ?: 'main'}"/>
     <title>Quartz Jobs - Reschedule</title>
 </head>
 <body>
