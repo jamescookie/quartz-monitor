@@ -3,33 +3,33 @@ package grails.plugins.quartz
 import org.quartz.spi.TriggerFiredBundle
 
 import java.util.concurrent.ConcurrentHashMap
+import java.util.concurrent.ConcurrentMap
 
 /**
- * Job factory which enhances GrailsJobFactory.
+ * Enhances GrailsJobFactory.
  *
  * @author James Cook
  * @since 0.1
  */
 class QuartzMonitorJobFactory extends GrailsJobFactory {
 
-    static final Map<String, Map<String, Object>> jobRuns = new ConcurrentHashMap<String, Map<String, Object>>()
+    static final ConcurrentMap<String, Map<String, Object>> jobRuns = new ConcurrentHashMap<String, Map<String, Object>>()
 
     def sessionFactory
 
     @Override
-    protected Object createJobInstance(TriggerFiredBundle bundle) throws Exception {
+    protected createJobInstance(TriggerFiredBundle bundle) {
         String uniqueTriggerName = bundle.trigger.key.name
-        Object job = super.createJobInstance(bundle)
-        if (job instanceof GrailsJobFactory.GrailsJob) {
-            Map<String, Object> map
-            if (jobRuns.containsKey(uniqueTriggerName)) {
-                map = jobRuns[uniqueTriggerName]
-            } else {
-                map = new ConcurrentHashMap<String, Object>()
-                jobRuns[uniqueTriggerName] = map
-            }
-            job = new QuartzDisplayJob((GrailsJobFactory.GrailsJob) job, map, sessionFactory)
+        def job = super.createJobInstance(bundle)
+        if (!(job instanceof GrailsJobFactory.GrailsJob)) {
+            return job
         }
-        return job
+
+        Map<String, Object> map = jobRuns[uniqueTriggerName]
+        if (map == null) {
+            jobRuns[uniqueTriggerName] = map = new ConcurrentHashMap<String, Object>()
+        }
+
+        return new QuartzDisplayJob((GrailsJobFactory.GrailsJob) job, map, sessionFactory)
     }
 }

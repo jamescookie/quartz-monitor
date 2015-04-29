@@ -5,14 +5,14 @@ import org.quartz.JobExecutionContext
 import org.quartz.JobExecutionException
 
 /**
- * Quartz Job implementation that invokes execute() on the GrailsTaskClassJob instance whilst recording the time
+ * Invokes execute() on the GrailsTaskClassJob instance whilst recording the time.
  */
 class QuartzDisplayJob implements Job {
     GrailsJobFactory.GrailsJob job
     Map<String, Object> jobDetails
-    private def sessionFactory
+    private sessionFactory
 
-    QuartzDisplayJob(GrailsJobFactory.GrailsJob job, Map<String, Object> jobDetails, def sessionFactory) {
+    QuartzDisplayJob(GrailsJobFactory.GrailsJob job, Map<String, Object> jobDetails, sessionFactory) {
         this.job = job
         this.jobDetails = jobDetails
         this.sessionFactory = sessionFactory
@@ -25,9 +25,9 @@ class QuartzDisplayJob implements Job {
         long start = System.currentTimeMillis()
         try {
             job.execute(context)
-            if (shouldFlushSession(job.job)) {
-                org.springframework.orm.hibernate3.SessionFactoryUtils.getSession(sessionFactory, false)?.flush()
-            }
+            flushSession(job.job)
+            jobDetails.status = "complete"
+            jobDetails.duration = System.currentTimeMillis() - start
         } catch (Throwable e) {
             jobDetails.error = e.message
             jobDetails.status = "error"
@@ -36,15 +36,15 @@ class QuartzDisplayJob implements Job {
             }
             throw new JobExecutionException(e.message, e)
         }
-        jobDetails.status = "complete"
-        jobDetails.duration = System.currentTimeMillis() - start
     }
 
-    private boolean shouldFlushSession(job) {
-        boolean shouldFlush = sessionFactory != null
-        if (job.metaClass.hasProperty(job, 'sessionRequired') && job.sessionRequired == false) {
-            shouldFlush = false
+    private void flushSession(job) {
+        if (job.metaClass.hasProperty(job, 'sessionRequired') && !job.sessionRequired) {
+            return
         }
-        return shouldFlush
+
+        if (sessionFactory) {
+            org.springframework.orm.hibernate3.SessionFactoryUtils.getSession(sessionFactory, false)?.flush()
+        }
     }
 }
