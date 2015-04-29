@@ -13,9 +13,9 @@ grails.project.dependency.resolution = {
 
     plugins {
 
-        compile ':quartz:1.0.1'
+        compile ':quartz:1.0.2'
 
-        build ':release:2.2.1', ':rest-client-builder:2.0.3', {
+        build ':release:3.1.1', ':rest-client-builder:2.0.3', {
             export = false
         }
     }
