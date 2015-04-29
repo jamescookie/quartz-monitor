@@ -95,6 +95,14 @@ environments {
     }
 }
 
+quartz {
+    monitor {
+        showTriggerNames = false
+        showCountdown = true
+        showTickingClock = true
+    }
+}
+
 // log4j configuration
 log4j.main = {
     // Example of changing the log pattern for the default console appender:

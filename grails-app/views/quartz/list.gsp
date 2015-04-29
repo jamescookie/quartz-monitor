@@ -5,9 +5,6 @@
         <g:set var="layoutName" value="${grailsApplication.config.quartz?.monitor?.layout}" />
         <meta name="layout" content="${layoutName ?: 'main'}" />
         <title>Quartz Jobs</title>
-        <link rel="stylesheet" href="${resource(dir: 'css', file: 'quartz-monitor.css', plugin: 'quartz-monitor')}"/>
-        <link rel="stylesheet" href="${resource(dir: 'css', file: 'jquery.countdown.css', plugin: 'quartz-monitor')}"/>
-        <link rel="stylesheet" href="${resource(dir: 'css', file: 'jquery.clock.css', plugin: 'quartz-monitor')}"/>
     </head>
     <body>
         <div class="nav">
@@ -17,10 +14,10 @@
             <h1 id="quartz-title">
                 Quartz Jobs
                 <g:if test="${scheduler.isInStandbyMode()}">
-                    <a href="<g:createLink action="startScheduler"/>"><img class="quartz-tooltip" data-tooltip="Start scheduler" src="<g:resource dir="images" file="play-all.png" plugin="quartz-monitor"/>"></a>
+                    <a href="<g:createLink action="startScheduler"/>"><asset:image class="quartz-tooltip" data-tooltip="Start scheduler" src="play-all.png" /></a>
                 </g:if>
                 <g:else>
-                    <a href="<g:createLink action="stopScheduler"/>"><img class="quartz-tooltip" data-tooltip="Pause scheduler" src="<g:resource dir="images" file="pause-all.png" plugin="quartz-monitor"/>"></a>
+                    <a href="<g:createLink action="stopScheduler"/>"><asset:image class="quartz-tooltip" data-tooltip="Pause scheduler" src="pause-all.png" /></a>
                 </g:else>
             </h1>
             <g:if test="${flash.message}">
@@ -62,20 +59,20 @@
                             <td class="quartz-actions">
                                 <g:if test="${job.status != 'running'}">
                                     <g:if test="${job.trigger}">
-                                        <a href="<g:createLink action="stop" params="[jobName:job.name, triggerName:job.trigger.name, triggerGroup:job.trigger.group]"/>"><img class="quartz-tooltip" data-tooltip="Stop job from running again" src="<g:resource dir="images" file="stop.png" plugin="quartz-monitor"/>"></a>
+                                        <a href="<g:createLink action="stop" params="[jobName:job.name, triggerName:job.trigger.name, triggerGroup:job.trigger.group]"/>"><asset:image class="quartz-tooltip" data-tooltip="Stop job from running again" src="stop.png"/></a>
                                         <g:if test="${job.triggerStatus == Trigger.TriggerState.PAUSED}">
-                                            <a href="<g:createLink action="resume" params="[jobName:job.name, jobGroup:job.group]"/>"><img class="quartz-tooltip" data-tooltip="Resume job schedule" src="<g:resource dir="images" file="resume.png" plugin="quartz-monitor"/>"></a>
+                                            <a href="<g:createLink action="resume" params="[jobName:job.name, jobGroup:job.group]"/>"><asset:image class="quartz-tooltip" data-tooltip="Resume job schedule" src="resume.png"/></a>
                                         </g:if>
                                         <g:elseif test="${job.trigger.mayFireAgain()}">
-                                            <a href="<g:createLink action="pause" params="[jobName:job.name, jobGroup:job.group]"/>"><img class="quartz-tooltip" data-tooltip="Pause job schedule" src="<g:resource dir="images" file="pause.png" plugin="quartz-monitor"/>"></a>
+                                            <a href="<g:createLink action="pause" params="[jobName:job.name, jobGroup:job.group]"/>"><asset:image class="quartz-tooltip" data-tooltip="Pause job schedule" src="pause.png"/></a>
                                         </g:elseif>
                                     </g:if>
                                     <g:else>
-                                        <a href="<g:createLink action="start" params="[jobName:job.name, jobGroup:job.group]"/>"><img class="quartz-tooltip" data-tooltip="Start job schedule" src="<g:resource dir="images" file="start.png" plugin="quartz-monitor"/>"></a>
+                                        <a href="<g:createLink action="start" params="[jobName:job.name, jobGroup:job.group]"/>"><asset:image class="quartz-tooltip" data-tooltip="Start job schedule" src="start.png"/></a>
                                     </g:else>
-                                    <a href="<g:createLink action="runNow" params="[jobName:job.name, jobGroup:job.group]"/>"><img class="quartz-tooltip" data-tooltip="Run now" src="<g:resource dir="images" file="run.png" plugin="quartz-monitor"/>"></a>
+                                    <a href="<g:createLink action="runNow" params="[jobName:job.name, jobGroup:job.group]"/>"><asset:image class="quartz-tooltip" data-tooltip="Run now" src="run.png"/></a>
                                     <g:if test="${job.trigger instanceof org.quartz.CronTrigger}">
-                                        <a href="<g:createLink action="editCronTrigger" params="[triggerName:job.trigger.name, triggerGroup:job.trigger.group]"/>"><img class="quartz-tooltip" data-tooltip="Reschedule" src="<g:resource dir="images" file="reschedule.png" plugin="quartz-monitor"/>"></a>
+                                        <a href="<g:createLink action="editCronTrigger" params="[triggerName:job.trigger.name, triggerGroup:job.trigger.group]"/>"><asset:image class="quartz-tooltip" data-tooltip="Reschedule" src="reschedule.png"/></a>
                                     </g:if>
                                 </g:if>
                             </td>
@@ -85,13 +82,5 @@
                 </table>
             </div>
         </div>
-        <g:unless test="${grailsApplication.config.quartz.monitor.showCountdown == false}">
-            <g:javascript src="jquery.countdown.js" plugin="quartz-monitor"/>
-            <g:javascript src="jquery.color.js" plugin="quartz-monitor"/>
-        </g:unless>
-        <g:unless test="${grailsApplication.config.quartz.monitor.showTickingClock == false}">
-            <g:javascript src="jquery.clock.js" plugin="quartz-monitor"/>
-        </g:unless>
-        <g:javascript src="quartz-monitor.js" plugin="quartz-monitor"/>
     </body>
 </html>
