@@ -16,7 +16,7 @@ grails.project.dependency.resolution = {
         compile ':quartz:1.0.2'
         compile ':asset-pipeline:2.1.5'
 
-        build ':release:3.1.1', ':rest-client-builder:2.0.3', {
+        build ':release:3.1.1', ':rest-client-builder:2.1.1', {
             export = false
         }
     }
