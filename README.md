@@ -4,7 +4,7 @@ Allows you to view and administer all your Quartz jobs in one place.
 
 ##Prerequisites
 
-This plugin requires the [Quartz plugin](http://grails.org/plugin/quartz) to run.
+This plugin requires the [Quartz](http://grails.org/plugin/quartz) and [Asset Pipeline](http://grails.org/plugin/asset-pipeline) plugins to run.
 
 ##Usage
 
@@ -20,7 +20,7 @@ To have the page keep you constantly up to date requires [jQuery](http://grails.
 
 ##Configuration
 
-There are various configuration options, all start with quartz.monitor:
+There are various configuration options, all start with `quartz.monitor`:
 
 ###layout
 
