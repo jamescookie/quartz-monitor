@@ -16,6 +16,7 @@ class QuartzMonitorJobFactory extends GrailsJobFactory {
     static final ConcurrentMap<String, Map<String, Object>> jobRuns = new ConcurrentHashMap<String, Map<String, Object>>()
 
     def sessionFactory
+    def pluginManager
 
     @Override
     protected createJobInstance(TriggerFiredBundle bundle) {
@@ -30,6 +31,6 @@ class QuartzMonitorJobFactory extends GrailsJobFactory {
             jobRuns[uniqueTriggerName] = map = new ConcurrentHashMap<String, Object>()
         }
 
-        return new QuartzDisplayJob((GrailsJobFactory.GrailsJob) job, map, sessionFactory)
+        return new QuartzDisplayJob((GrailsJobFactory.GrailsJob) job, map, sessionFactory, pluginManager)
     }
 }

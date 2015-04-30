@@ -11,11 +11,13 @@ class QuartzDisplayJob implements Job {
     GrailsJobFactory.GrailsJob job
     Map<String, Object> jobDetails
     private sessionFactory
+    private pluginManager
 
-    QuartzDisplayJob(GrailsJobFactory.GrailsJob job, Map<String, Object> jobDetails, sessionFactory) {
+    QuartzDisplayJob(GrailsJobFactory.GrailsJob job, Map<String, Object> jobDetails, sessionFactory, pluginManager) {
         this.job = job
         this.jobDetails = jobDetails
         this.sessionFactory = sessionFactory
+        this.pluginManager = pluginManager
     }
 
     void execute(final JobExecutionContext context) throws JobExecutionException {
@@ -27,14 +29,15 @@ class QuartzDisplayJob implements Job {
             job.execute(context)
             flushSession(job.job)
             jobDetails.status = "complete"
-            jobDetails.duration = System.currentTimeMillis() - start
         } catch (Throwable e) {
-            jobDetails.error = e.message
+            jobDetails.error = e.class.simpleName + ' : ' + e.message
             jobDetails.status = "error"
             if (e instanceof JobExecutionException) {
                 throw e
             }
             throw new JobExecutionException(e.message, e)
+        } finally {
+            jobDetails.duration = System.currentTimeMillis() - start
         }
     }
 
@@ -43,8 +46,12 @@ class QuartzDisplayJob implements Job {
             return
         }
 
-        if (sessionFactory) {
-            org.springframework.orm.hibernate3.SessionFactoryUtils.getSession(sessionFactory, false)?.flush()
+        if (sessionFactory && pluginManager) {
+            if (pluginManager.getGrailsPlugin('hibernate4')) {
+                sessionFactory.currentSession?.flush()
+            } else { // must be hibernate 3 - too much of an assumption??
+                org.springframework.orm.hibernate3.SessionFactoryUtils.getSession(sessionFactory, false)?.flush()
+            }
         }
     }
 }

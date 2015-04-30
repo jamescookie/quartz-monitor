@@ -47,7 +47,7 @@
                             <g:if test="${grailsApplication.config.quartz.monitor.showTriggerNames}">
                                 <td>${job.trigger?.name}</td>
                             </g:if>
-                            <g:set var="tooltip">${job.duration >= 0 ? "Job ran in: " + job.duration + "ms" : (job.error ? "Job threw exception: " + job.error : "")}</g:set>
+                            <g:set var="tooltip">${(job.error ? "Job threw exception: " + job.error + ". " : "") + (job.duration >= 0 ? "Job ran in: " + job.duration + "ms" : "")}</g:set>
                             <td class="quartz-tooltip quartz-status ${job.status?:"not-run"}" data-tooltip="${tooltip}">${job.lastRun}</td>
                             <td class="quartz-to-hide">${tooltip}</td>
                             <g:if test="${scheduler.isInStandbyMode() || job.triggerStatus == Trigger.TriggerState.PAUSED}">

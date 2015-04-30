@@ -19,9 +19,10 @@ class QuartzMonitorGrailsPlugin {
 
     def doWithSpring = {
         quartzJobFactory(QuartzMonitorJobFactory) {
-            if (manager?.hasGrailsPlugin("hibernate")) {
+            if (manager?.hasGrailsPlugin("hibernate") || manager?.hasGrailsPlugin("hibernate4")) {
                 sessionFactory = ref("sessionFactory")
             }
+            pluginManager = ref("pluginManager")
         }
     }
 }
