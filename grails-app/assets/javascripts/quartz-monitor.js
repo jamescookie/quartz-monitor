@@ -1,4 +1,4 @@
-//${grailsApplication.config.quartz.monitor.showCountdown ? '=require jquery.countdown' : ''}
-//${grailsApplication.config.quartz.monitor.showCountdown ? '=require jquery.color' : ''}
-//${grailsApplication.config.quartz.monitor.showTickingClock ? '=require jquery.clock' : ''}
-//=require_tree .
+//=require ${grails.util.Holders.config.quartz.monitor.showCountdown ? 'jquery.countdown' : 'quartz-monitor-main'}
+//=require ${grails.util.Holders.config.quartz.monitor.showCountdown ? 'jquery.color' : 'quartz-monitor-main'}
+//=require ${grails.util.Holders.config.quartz.monitor.showTickingClock ? 'jquery.clock' : 'quartz-monitor-main'}
+//=require quartz-monitor-main

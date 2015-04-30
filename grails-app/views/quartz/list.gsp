@@ -5,6 +5,8 @@
         <g:set var="layoutName" value="${grailsApplication.config.quartz?.monitor?.layout}" />
         <meta name="layout" content="${layoutName ?: 'main'}" />
         <title>Quartz Jobs</title>
+        <asset:javascript src="quartz-monitor.js"/>
+        <asset:stylesheet src="quartz-monitor.css"/>
     </head>
     <body>
         <div class="nav">
