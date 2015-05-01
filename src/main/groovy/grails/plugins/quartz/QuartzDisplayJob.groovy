@@ -1,5 +1,6 @@
 package grails.plugins.quartz
 
+import grails.plugins.GrailsVersionUtils
 import org.quartz.Job
 import org.quartz.JobExecutionContext
 import org.quartz.JobExecutionException
@@ -47,7 +48,7 @@ class QuartzDisplayJob implements Job {
         }
 
         if (sessionFactory && pluginManager) {
-            if (pluginManager.getGrailsPlugin('hibernate4')) {
+            if (pluginManager.getGrailsPlugin('hibernate4') || GrailsVersionUtils.isVersionGreaterThan("4.0.0", pluginManager.getGrailsPlugin('hibernate').version)) {
                 sessionFactory.currentSession?.flush()
             } else { // must be hibernate 3 - too much of an assumption??
                 org.springframework.orm.hibernate3.SessionFactoryUtils.getSession(sessionFactory, false)?.flush()
