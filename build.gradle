@@ -34,6 +34,19 @@ ext {
     gradleWrapperVersion = project.gradleWrapperVersion
 }
 
+bintray {
+    pkg {
+        userOrg = ''
+        name = "org.grails.plugins:$project.name"
+        issueTrackerUrl = "https://github.com/jamescookie/$project.name/issues"
+        vcsUrl = "https://github.com/jamescookie/$project.name"
+        version {
+            attributes = ['grails-plugin': "jamescookie.plugins:$project.name"]
+            name = project.version
+        }
+    }
+}
+
 sourceCompatibility = 1.7
 targetCompatibility = 1.7
 
