@@ -4,9 +4,11 @@
 *.iml
 *.log
 /.classpath
+/.gradle
 /.idea
 /.project
 /.settings
+/build
 /grails-quartz-monitor-*.zip
 /grails-quartz-monitor-*.zip.sha1
 /plugin.xml
