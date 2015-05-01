@@ -1,4 +1,2 @@
-target
-*.iws
-*.ipr
-*.iml
+/.gradle
+/build
