@@ -17,7 +17,7 @@ plugins {
 }
 
 version "0.1"
-group "test.harness"
+group "test.harness.no.hibernate"
 
 apply plugin: "spring-boot"
 apply plugin: "war"
@@ -57,9 +57,8 @@ dependencies {
     compile "org.grails:grails-dependencies"
     compile "org.grails:grails-web-boot"
 
-    compile "org.grails.plugins:hibernate"
     compile "org.grails.plugins:cache"
-    compile "org.hibernate:hibernate-ehcache"
+    compile "org.grails.plugins:mongodb"
 
     runtime "org.grails.plugins:asset-pipeline"
     runtime "org.grails.plugins:scaffolding"
