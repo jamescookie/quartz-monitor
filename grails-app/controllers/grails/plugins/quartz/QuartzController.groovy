@@ -38,13 +38,11 @@ class QuartzController {
                 }
             }
         }
-        [jobs: jobsList, now: new Date(), scheduler: quartzScheduler]
+        [jobs: jobsList, now: new Date(), schedulerInStandbyMode: quartzScheduler.isInStandbyMode()]
     }
 
     private createJob(String jobGroup, String jobName, List jobsList, String triggerName = "") {
-        def currentJob = [group: jobGroup, name: jobName]
-        def map = QuartzMonitorJobFactory.jobRuns[triggerName]
-        if (map) currentJob << map
+        def currentJob = [group: jobGroup, name: jobName] + (QuartzMonitorJobFactory.jobRuns[triggerName] ?: [:])
         jobsList << currentJob
         return currentJob
     }

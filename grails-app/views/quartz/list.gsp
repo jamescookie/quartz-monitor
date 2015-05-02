@@ -15,7 +15,7 @@
         <div class="body">
             <h1 id="quartz-title">
                 Quartz Jobs
-                <g:if test="${scheduler.isInStandbyMode()}">
+                <g:if test="${schedulerInStandbyMode}">
                     <a href="<g:createLink action="startScheduler"/>"><asset:image class="quartz-tooltip" data-tooltip="Start scheduler" src="play-all.png" /></a>
                 </g:if>
                 <g:else>
@@ -52,7 +52,7 @@
                             <g:set var="tooltip">${(job.error ? "Job threw exception: " + job.error + ". " : "") + (job.duration >= 0 ? "Job ran in: " + job.duration + "ms" : "")}</g:set>
                             <td class="quartz-tooltip quartz-status ${job.status?:"not-run"}" data-tooltip="${tooltip}">${job.lastRun}</td>
                             <td class="quartz-to-hide">${tooltip}</td>
-                            <g:if test="${scheduler.isInStandbyMode() || job.triggerStatus == Trigger.TriggerState.PAUSED}">
+                            <g:if test="${schedulerInStandbyMode || job.triggerStatus == Trigger.TriggerState.PAUSED}">
                                 <td class="hasCountdown countdown_amount">Paused</td>
                             </g:if>
                             <g:else>

@@ -23,12 +23,16 @@ class QuartzDisplayJob implements Job {
 
     void execute(final JobExecutionContext context) throws JobExecutionException {
         jobDetails.clear()
+        def jobJob = job.job
+        if (hasProperty(jobJob, 'description') && jobJob.description) {
+            jobDetails.name = jobJob.description
+        }
         jobDetails.lastRun = new Date()
         jobDetails.status = "running"
         long start = System.currentTimeMillis()
         try {
             job.execute(context)
-            flushSession(job.job)
+            flushSession(jobJob)
             jobDetails.status = "complete"
         } catch (Throwable e) {
             jobDetails.error = e.class.simpleName + ' : ' + e.message
@@ -42,8 +46,12 @@ class QuartzDisplayJob implements Job {
         }
     }
 
+    private boolean hasProperty(thing, name) {
+        thing.metaClass.hasProperty(thing, name)
+    }
+
     private void flushSession(job) {
-        if (job.metaClass.hasProperty(job, 'sessionRequired') && !job.sessionRequired) {
+        if (hasProperty(job, 'sessionRequired') && !job.sessionRequired) {
             return
         }
 

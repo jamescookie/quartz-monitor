@@ -1,6 +1,8 @@
 package test.harness
 
 class TestFailingJob {
+    def sessionRequired = true
+
     static triggers = {
         simple startDelay: 30000, repeatInterval: 300000
     }
