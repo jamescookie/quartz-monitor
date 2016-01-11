@@ -8,12 +8,11 @@ buildscript {
     }
     dependencies {
         classpath "org.grails:grails-gradle-plugin:$grailsVersion"
-        classpath 'io.spring.gradle:dependency-management-plugin:0.5.3.RELEASE'
     }
 }
 
 plugins {
-    id "io.spring.dependency-management" version "0.4.0.RELEASE"
+    id "io.spring.dependency-management" version "0.5.2.RELEASE"
     id "com.jfrog.bintray" version "1.5"
 }
 
@@ -76,7 +75,7 @@ dependencies {
     provided 'javax.servlet:javax.servlet-api:3.1.0'
 
     compile "org.grails.plugins:quartz:2.0.0.M4"
-    compile "org.grails.plugins:asset-pipeline:3.0.1"
+    compile "org.grails.plugins:asset-pipeline:$grailsVersion"
 
     testCompile "org.grails:grails-plugin-testing"
 
