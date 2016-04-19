@@ -7,6 +7,15 @@
         <title>Quartz Jobs</title>
         <asset:javascript src="quartz-monitor.js"/>
         <asset:stylesheet src="quartz-monitor.css"/>
+        <g:if test="${grailsApplication.config.getProperty("quartz.monitor.showCountdown", Boolean, true)}">
+            <asset:javascript src="jquery.countdown.js" />
+            <asset:javascript src="jquery.color.js" />
+            <asset:stylesheet src="jquery.countdown.css"/>
+        </g:if>
+        <g:if test="${grailsApplication.config.getProperty("quartz.monitor.showTickingClock", Boolean, true)}">
+            <asset:javascript src="jquery.clock.js" />
+            <asset:stylesheet src="jquery.clock.css" />
+        </g:if>
     </head>
     <body>
         <div class="nav">
