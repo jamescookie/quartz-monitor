@@ -13,7 +13,7 @@ buildscript {
 }
 
 plugins {
-    id "io.spring.dependency-management" version "0.5.2.RELEASE"
+    id "io.spring.dependency-management" version "0.5.4.RELEASE"
 }
 
 version "0.1"
@@ -63,8 +63,6 @@ dependencies {
 
     runtime "org.grails.plugins:asset-pipeline"
     runtime "org.grails.plugins:scaffolding"
-    compile "org.grails.plugins:quartz:2.0.0.M4"
-    compile "org.grails.plugins:quartz-monitor:1.3"
 
     testCompile "org.grails:grails-plugin-testing"
     testCompile "org.grails.plugins:geb"
@@ -73,6 +71,8 @@ dependencies {
     testRuntime 'org.seleniumhq.selenium:selenium-htmlunit-driver:2.44.0'
 
     console "org.grails:grails-console"
+
+    compile "org.grails.plugins:grails-schwartz-monitor:1.4-SNAPSHOT"
 }
 
 task wrapper(type: Wrapper) {

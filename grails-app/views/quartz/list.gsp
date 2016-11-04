@@ -5,8 +5,8 @@
         <g:set var="layoutName" value="${grailsApplication.config.quartz?.monitor?.layout}" />
         <meta name="layout" content="${layoutName ?: 'main'}" />
         <title>Quartz Jobs</title>
-        <asset:javascript src="quartz-monitor.js"/>
-        <asset:stylesheet src="quartz-monitor.css"/>
+        <asset:javascript src="schwartz-monitor.js"/>
+        <asset:stylesheet src="schwartz-monitor.css"/>
         <g:if test="${grailsApplication.config.getProperty("quartz.monitor.showCountdown", Boolean, true)}">
             <asset:javascript src="jquery.countdown.js" />
             <asset:javascript src="jquery.color.js" />
@@ -18,9 +18,6 @@
         </g:if>
     </head>
     <body>
-        <div class="nav">
-            <span class="menuButton"><a class="home" href="${createLink(uri: '/')}"><g:message code="default.home.label"/></a></span>
-        </div>
         <div class="body">
             <h1 id="quartz-title">
                 Quartz Jobs

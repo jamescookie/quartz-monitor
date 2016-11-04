@@ -12,11 +12,11 @@ buildscript {
 }
 
 plugins {
-    id "io.spring.dependency-management" version "0.5.2.RELEASE"
+    id "io.spring.dependency-management" version "0.5.4.RELEASE"
     id "com.jfrog.bintray" version "1.5"
 }
 
-version "1.3"
+version "1.4-SNAPSHOT"
 group "org.grails.plugins"
 
 apply plugin: 'maven-publish'
@@ -32,19 +32,6 @@ apply from:'https://raw.githubusercontent.com/grails/grails-profile-repository/m
 ext {
     grailsVersion = project.grailsVersion
     gradleWrapperVersion = project.gradleWrapperVersion
-}
-
-bintray {
-    pkg {
-        userOrg = ''
-        name = "org.grails.plugins:$project.name"
-        issueTrackerUrl = "https://github.com/jamescookie/$project.name/issues"
-        vcsUrl = "https://github.com/jamescookie/$project.name"
-        version {
-            attributes = ['grails-plugin': "jamescookie.plugins:$project.name"]
-            name = project.version
-        }
-    }
 }
 
 sourceCompatibility = 1.7
@@ -74,14 +61,29 @@ dependencies {
     provided "org.grails:grails-dependencies"
     provided 'javax.servlet:javax.servlet-api:3.1.0'
 
-    compile "org.grails.plugins:quartz:2.0.0.M4"
-    compile "org.grails.plugins:asset-pipeline:$grailsVersion"
+    runtime "org.grails.plugins:asset-pipeline"
 
     testCompile "org.grails:grails-plugin-testing"
 
     console "org.grails:grails-console"
+
+    compile "com.agileorbit:schwartz:1.0.0"
 }
 
 task wrapper(type: Wrapper) {
     gradleVersion = gradleWrapperVersion
 }
+
+bintray {
+    pkg {
+        userOrg = ''
+        name = "org.grails.plugins:$project.name"
+        issueTrackerUrl = "https://github.com/jamescookie/$project.name/issues"
+        vcsUrl = "https://github.com/jamescookie/$project.name"
+        version {
+            attributes = ['grails-plugin': "jamescookie.plugins:$project.name"]
+            name = project.version
+        }
+    }
+}
+
