@@ -72,7 +72,7 @@ dependencies {
 
     console "org.grails:grails-console"
 
-    compile "org.grails.plugins:grails-schwartz-monitor:1.4-SNAPSHOT"
+    compile "org.grails.plugins:schwartz-monitor:1.4-SNAPSHOT"
 }
 
 task wrapper(type: Wrapper) {
