@@ -9,8 +9,6 @@ appender('STDOUT', ConsoleAppender) {
     }
 }
 
-root(ERROR, ['STDOUT'])
-
 if(Environment.current == Environment.DEVELOPMENT) {
     def targetDir = BuildSettings.TARGET_DIR
     if(targetDir) {
@@ -26,3 +24,8 @@ if(Environment.current == Environment.DEVELOPMENT) {
         logger("StackTrace", ERROR, ['FULL_STACKTRACE'], false )
     }
 }
+
+logger('grails.plugins.schwartz', TRACE)
+logger('grails.plugins.schwartzmonitor', TRACE)
+
+root(INFO, ['STDOUT'])

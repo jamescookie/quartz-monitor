@@ -42,7 +42,7 @@ dependencies {
     provided 'org.grails.plugins:hibernate'
     provided "org.grails.plugins:asset-pipeline"
 
-    provided "com.agileorbit:schwartz:1.0.0"
+    compile "com.agileorbit:schwartz:1.0.0"
 }
 
 task wrapper(type: Wrapper) {

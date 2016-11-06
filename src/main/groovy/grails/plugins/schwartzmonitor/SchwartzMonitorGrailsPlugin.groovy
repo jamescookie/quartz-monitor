@@ -1,8 +1,12 @@
 package grails.plugins.schwartzmonitor
 
-import grails.plugins.schwartz.listener.QuartzSchedulerListener
+import grails.plugins.Plugin
+import grails.plugins.schwartz.monitor.listener.QuartzJobListener
+import groovy.util.logging.Slf4j
+import org.quartz.JobListener
 
-class SchwartzMonitorGrailsPlugin {
+@Slf4j
+class SchwartzMonitorGrailsPlugin extends Plugin {
     def grailsVersion = "1.3 > *"
 
     def author = "Robert Oschwald"
@@ -13,22 +17,19 @@ class SchwartzMonitorGrailsPlugin {
     def documentation = "http://grails.org/plugin/grails-schwartz-monitor"
 
     def license = "APACHE"
-    def scm = [ url: "http://github.com/robertoschwald/grails-schwartz-monitor" ]
-    def issueManagement = [ system: "GITHUB", url: "http://github.com/robertoschwald/grails-schwartz-monitor/issues" ]
+    def scm = [url: "http://github.com/robertoschwald/grails-schwartz-monitor"]
+    def issueManagement = [system: "GITHUB", url: "http://github.com/robertoschwald/grails-schwartz-monitor/issues"]
 
     def loadAfter = ['schwartz', 'quartz']
 
-    def doWithSpring = {
+    @Override
+    Closure doWithSpring() {{ ->
+        monitorQuartzJobListener(QuartzJobListener)
+    }}
 
-        monitorSchedulerListener(QuartzSchedulerListener)
-
-        /** Very bad idea to wrap the configured quartsJobFactory in an own one.
-        quartzJobFactory(QuartzMonitorJobFactory) {
-            if (manager?.hasGrailsPlugin("hibernate") || manager?.hasGrailsPlugin("hibernate4")) {
-                sessionFactory = ref("sessionFactory")
-            }
-            pluginManager = ref("pluginManager")
-        }
-        **/
+    @Override
+    void doWithApplicationContext() {
+        log.debug("Registering Job listener")
+        applicationContext.getBean('quartzScheduler').getListenerManager().addJobListener(applicationContext.getBean('monitorQuartzJobListener') as JobListener)
     }
 }

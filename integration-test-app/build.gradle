@@ -72,7 +72,7 @@ dependencies {
 
     console "org.grails:grails-console"
 
-    compile 'com.agileorbit:schwartz:' + file('../version.txt').text.trim()
+    compile 'org.grails.plugins:schwartz-monitor:' + file('../version.txt').text.trim()
 }
 
 task wrapper(type: Wrapper) {
