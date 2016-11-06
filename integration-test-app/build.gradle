@@ -17,7 +17,7 @@ plugins {
 }
 
 version "0.1"
-group "test.harness"
+group "org.grails.plugins"
 
 apply plugin: "spring-boot"
 apply plugin: "war"
@@ -72,7 +72,7 @@ dependencies {
 
     console "org.grails:grails-console"
 
-    compile "org.grails.plugins:schwartz-monitor:1.4-SNAPSHOT"
+    compile 'com.agileorbit:schwartz:' + file('../version.txt').text.trim()
 }
 
 task wrapper(type: Wrapper) {

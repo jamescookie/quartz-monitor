@@ -1,0 +1,30 @@
+[[configuration]]
+== Configuration
+
+=== Plugin config options
+
+There are several configuration settings that you can set in the Grails config to customize various aspects of the plugin, and you can also specify Quartz configuration settings that will affect the configuration of the Scheduler, JobStore, etc.
+
+All config options must be in the `quartz` block in `application.groovy` (or make the equivalent changes in `application.yml` if you haven't converted it to Groovy syntax yet) but are shown here without the prefix.
+
+[cols="30,30,40"]
+|====================
+| *Property* | *Default Value* | *Meaning*
+
+|quartz.monitor.layout
+|`main`
+|Allows you to change the layout that page will use.
+
+|quartz.monitor.showTriggerNames
+|`false`
+|If this is set to true, then the names of the triggers will be shown in the list - useful if you have multiple triggers for the same job.
+
+|quartz.monitor.showCountdown
+|`true`
+|If set to false, the javascript to show the countdown to when the job will fire next is not rendered.
+
+|quartz.monitor.showTickingClock
+|true
+|Will not add a javascript to the page in order to show a clock with the current time if this is set to false.
+
+|====================

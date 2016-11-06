@@ -1,46 +1,30 @@
 buildscript {
-    ext {
-        grailsVersion = project.grailsVersion
-    }
     repositories {
         mavenLocal()
         maven { url "https://repo.grails.org/grails/core" }
+        jcenter()
     }
     dependencies {
         classpath "org.grails:grails-gradle-plugin:$grailsVersion"
+        classpath 'org.asciidoctor:asciidoctor-gradle-plugin:1.5.3'
+        classpath 'org.asciidoctor:asciidoctorj-epub3:1.5.0-alpha.6'
+        classpath 'org.asciidoctor:asciidoctorj-pdf:1.5.0-alpha.11'
     }
 }
 
-plugins {
-    id "io.spring.dependency-management" version "0.5.4.RELEASE"
-    id "com.jfrog.bintray" version "1.5"
-}
-
-version "1.4-SNAPSHOT"
+version file('version.txt').text.trim()
 group "org.grails.plugins"
 
-apply plugin: 'maven-publish'
-apply plugin: 'eclipse'
 apply plugin: 'idea'
-apply plugin: "spring-boot"
 apply plugin: "org.grails.grails-plugin"
-apply plugin: "org.grails.grails-gsp"
-// Used for publishing to central repository, remove if not needed
-apply from:'https://raw.githubusercontent.com/grails/grails-profile-repository/master/profiles/plugin/templates/grailsCentralPublishing.gradle'
-apply from:'https://raw.githubusercontent.com/grails/grails-profile-repository/master/profiles/plugin/templates/bintrayPublishing.gradle'
-
-ext {
-    grailsVersion = project.grailsVersion
-    gradleWrapperVersion = project.gradleWrapperVersion
-}
+apply plugin: 'org.grails.grails-plugin-publish'
+apply plugin: 'org.asciidoctor.convert'
 
 sourceCompatibility = 1.7
 targetCompatibility = 1.7
 
-
 repositories {
     mavenLocal()
-    mavenCentral()
     maven { url "https://repo.grails.org/grails/core" }
 }
 
@@ -52,38 +36,77 @@ dependencyManagement {
 }
 
 dependencies {
-    provided 'org.springframework.boot:spring-boot-starter-logging'
-    provided "org.springframework.boot:spring-boot-starter-actuator"
-    provided "org.springframework.boot:spring-boot-autoconfigure"
-    provided "org.springframework.boot:spring-boot-starter-tomcat"
+    compile 'org.grails:grails-core'
+    compile 'org.grails:grails-plugin-datasource'
 
-    provided "org.grails:grails-web-boot"
-    provided "org.grails:grails-dependencies"
-    provided 'javax.servlet:javax.servlet-api:3.1.0'
+    provided 'org.grails.plugins:hibernate'
+    provided "org.grails.plugins:asset-pipeline"
 
-    runtime "org.grails.plugins:asset-pipeline"
-
-    testCompile "org.grails:grails-plugin-testing"
-
-    console "org.grails:grails-console"
-
-    compile "com.agileorbit:schwartz:1.0.0"
+    provided "com.agileorbit:schwartz:1.0.0"
 }
 
 task wrapper(type: Wrapper) {
     gradleVersion = gradleWrapperVersion
 }
 
-bintray {
-    pkg {
-        userOrg = ''
-        name = "org.grails.plugins:$project.name"
-        issueTrackerUrl = "https://github.com/jamescookie/$project.name/issues"
-        vcsUrl = "https://github.com/jamescookie/$project.name"
-        version {
-            attributes = ['grails-plugin': "jamescookie.plugins:$project.name"]
-            name = project.version
+grailsPublish {
+    desc = 'Schwartz Monitor'
+    developers = [robertoschwald: 'Robert Oschwald']
+    githubSlug = 'agileorbit/grails-schwartz-monitor'
+    issueTrackerUrl = 'https://github.com/robertoschwald/grails-schwartz-monitor/issues'
+    license {
+        name = 'Apache-2.0'
+    }
+    title = 'Schwartz Monitor Plugin'
+    repo = 'grails-plugins'
+    vcsUrl = 'https://github.com/robertoschwald/grails-schwartz-monitor/'
+}
+
+task docs(dependsOn: [asciidoctor, org.gradle.api.tasks.javadoc.Groovydoc]) << {
+    File dir = new File(buildDir, 'docs')
+
+    ['pdf', 'epub'].each { String ext ->
+        File f = new File(dir, 'index.' + ext)
+        if (f.exists()) {
+            f.renameTo new File(dir, project.name + '-' + project.version + '.' + ext)
         }
     }
+
+    new File(buildDir, 'docs/ghpages.html') << file('src/docs/index.tmpl').text.replaceAll('@VERSION@', project.version)
+
+    copy {
+        from 'src/docs'
+        into new File(buildDir, 'docs').path
+        include '**/*.jpg', '**/*.png'
+    }
+}
+
+asciidoctor {
+    separateOutputDirs = false
+    sourceDir = file('src/docs')
+    sources {
+        include 'index.adoc'
+    }
+    outputDir new File(buildDir, 'docs')
+    backends 'html5', 'pdf', 'epub3'
+    attributes  copyright  : 'Apache License, Version 2.0',
+      docinfo1             : 'true',
+      doctype              : 'book',
+      encoding             : 'utf-8',
+      'front-cover-image'  : 'image:cover.png[Front Cover,800,600]',
+      icons                : 'font',
+      id                   : project.name + ':' + project.version,
+      idprefix             : '',
+      idseparator          : '-',
+      lang                 : 'en',
+      linkattrs            : true,
+      numbered             : '',
+      producer             : 'Asciidoctor',
+      revnumber            : project.version,
+      setanchors           : true,
+      'source-highlighter'  : 'prettify',
+      toc                  : 'left',
+      toc2                 : '',
+      toclevels            : '2'
 }
 
