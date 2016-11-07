@@ -24,6 +24,7 @@ if [[ -n $TRAVIS_TAG && $TRAVIS_PULL_REQUEST == 'false' && $EXIT_STATUS -eq 0 ]]
 	git config --global credential.helper "store --file=~/.git-credentials"
 	echo "https://$GH_TOKEN:@github.com" > ~/.git-credentials
 
+    echo "Cloning gh-pages branch from $TRAVIS_REPO_SLUG"
 	git clone https://${GH_TOKEN}@github.com/${TRAVIS_REPO_SLUG}.git -b gh-pages gh-pages --single-branch > /dev/null
 	cd gh-pages
 
@@ -35,6 +36,8 @@ if [[ -n $TRAVIS_TAG && $TRAVIS_PULL_REQUEST == 'false' && $EXIT_STATUS -eq 0 ]]
 	git add .
 
 	git commit -a -m "Updating docs for Travis build: https://travis-ci.org/$TRAVIS_REPO_SLUG/builds/$TRAVIS_BUILD_ID"
+
+	echo "Pusing gh-pages to $TRAVIS_REPO_SLUG"
 	git push origin gh-pages
 
 fi
