@@ -42,6 +42,9 @@ dependencies {
     provided 'org.grails.plugins:hibernate'
     provided "org.grails.plugins:asset-pipeline"
 
+    testCompile "org.grails:grails-plugin-testing"
+    testCompile "org.grails.plugins:geb"
+
     compile "com.agileorbit:schwartz:1.0.0"
 }
 
