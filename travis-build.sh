@@ -16,9 +16,10 @@ if [[ $EXIT_STATUS -eq 0 ]]; then
 fi
 
 if [[ -n $TRAVIS_TAG && $TRAVIS_PULL_REQUEST == 'false' && $EXIT_STATUS -eq 0 ]]; then
+    echo "Uploading to bintray"
 	./gradlew bintrayUpload --stacktrace
-	./gradlew docs --stacktrace
 
+	./gradlew docs --stacktrace
 	git config --global user.name "$GIT_NAME"
 	git config --global user.email "$GIT_EMAIL"
 	git config --global credential.helper "store --file=~/.git-credentials"

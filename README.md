@@ -43,3 +43,6 @@ Will add javascript to the page in order to show a clock with the current time, 
 ## Internals
 
 This plugin replaces the Schwartz "quartzJobFactory" bean with an own one, which wraps the QuartzMonitorJobFactory. This allows the plugin to display the lastRun date, which is not available in the Schwartz plugin currently.
+
+
+[![Build Status](https://api.travis-ci.org/robertoschwald/grails-schwartz-monitor.png?branch=rewrite)](http://travis-ci.org/robertoschwald/grails-schwartz-monitor)
