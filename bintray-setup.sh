@@ -1,2 +1,0 @@
-export BINTRAY_USER=jamescookie
-export BINTRAY_KEY=b88xxxxxxxxx
