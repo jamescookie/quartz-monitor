@@ -86,14 +86,17 @@ bintray {
         name = "org.grails.plugins:$project.name"
         issueTrackerUrl = "https://github.com/robertoschwald/$project.name/issues"
         vcsUrl = "https://github.com/robertoschwald/$project.name"
+        licenses = project.hasProperty('license') ? [project.license] : ['Apache-2.0']
+        publicDownloadNumbers = true
         version {
-            attributes = ['grails-plugin': "robertoschwald.plugins:$project.name"]
             name = project.version
+            desc = 'Grails Schwartz-Monitor Plugin for Grails 3.x '
+            attributes = ['grails-plugin': "$project.group:$project.name"]
         }
     }
 }
 
-task docs(dependsOn: [asciidoctor, org.gradle.api.tasks.javadoc.Groovydoc]) << {
+task docs(dependsOn: ['asciidoctor', 'groovydoc']) {
     File dir = new File(buildDir, 'docs')
 
     ['pdf', 'epub'].each { String ext ->
