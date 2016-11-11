@@ -21,7 +21,7 @@ plugins {
     id "com.jfrog.artifactory" version "3.1.1"
 }
 
-version "2.0-SNAPSHOT"
+version file('version.txt').text.trim()
 group "org.grails.plugins"
 
 apply plugin:'maven-publish'
@@ -142,9 +142,15 @@ asciidoctor {
 }
 
 bintray {
+    user = System.getenv('BINTRAY_USER')
+    key = System.getenv('BINTRAY_KEY')
+    publications = ['maven']
+    publish = true
     pkg {
+        repo = 'plugins'
         userOrg = ''
-        name = "org.grails.plugins:$project.name"
+        name = "$project.name"
+        websiteUrl = "https://robertoschwald.github.io/grails-${project.name}-plugin"
         issueTrackerUrl = "https://github.com/robertoschwald/$project.name/issues"
         vcsUrl = "https://github.com/robertoschwald/$project.name"
         version {
