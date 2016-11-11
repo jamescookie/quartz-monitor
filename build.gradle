@@ -165,18 +165,3 @@ publishing {
     }
 }
 
-artifactory {
-    contextUrl = 'http://repo.symentis.office/' //The base Artifactory URL if not overridden by the publisher/resolver
-    publish {
-        defaults {
-            publications('mavenJava')
-            publishArtifacts = true
-            publishPom = true
-
-        }
-        repository {
-            repoKey = 'grails-plugins-local'
-        }
-    }
-}
-
