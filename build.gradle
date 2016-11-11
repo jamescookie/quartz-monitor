@@ -141,26 +141,15 @@ asciidoctor {
             toclevels: '2'
 }
 
-publishing {
-    publications {
-        mavenJava(MavenPublication) {
-            pom.withXml {
-                def pomNode = asNode()
-                pomNode.dependencyManagement.replaceNode {}
-
-                // simply remove dependencies without a version
-                // version-less dependencies are handled with dependencyManagement
-                // see https://github.com/spring-gradle-plugins/dependency-management-plugin/issues/8 for more complete solutions
-                pomNode.dependencies.dependency.findAll {
-                    it.version.text().isEmpty()
-                }.each {
-                    it.replaceNode {}
-                }
-            }
-            from components.java
-            def descriptor =
-                    artifacts = ["build/libs/schwartz-monitor-${version}.jar", sourcesJar]
-
+bintray {
+    pkg {
+        userOrg = ''
+        name = "org.grails.plugins:$project.name"
+        issueTrackerUrl = "https://github.com/robertoschwald/$project.name/issues"
+        vcsUrl = "https://github.com/robertoschwald/$project.name"
+        version {
+            attributes = ['grails-plugin': "robertoschwald.plugins:$project.name"]
+            name = project.version
         }
     }
 }
