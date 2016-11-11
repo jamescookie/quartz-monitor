@@ -11,7 +11,7 @@ import java.util.concurrent.ConcurrentHashMap
 @CompileStatic
 class QuartzMonitorService {
     static final String START_DATE = "startDate"
-    static final String END_DATE = "endDate"
+    static final String END_DATE = "lastRun"
 
     ConcurrentHashMap<JobKey, Map<String, Object>> additionalJobDetails = new ConcurrentHashMap<JobKey, Map>()
 
