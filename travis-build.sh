@@ -24,7 +24,7 @@ if [[ -n $TRAVIS_TAG ]] || [[ $TRAVIS_PULL_REQUEST == 'false' && $EXIT_STATUS -e
 	  ./gradlew bintrayUpload --stacktrace
     else
       echo "Publishing to Grails Artifactory"
-      ./gradlew audit-logging:publish -S || EXIT_STATUS=$?
+      ./gradlew publish -S || EXIT_STATUS=$?
     fi
 
     echo "Building docs and publish to gh-pages branch.."
