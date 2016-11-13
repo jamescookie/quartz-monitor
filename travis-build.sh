@@ -15,7 +15,8 @@ if [[ $EXIT_STATUS -eq 0 ]]; then
 	./integration-test-app/run_integration_tests.sh || EXIT_STATUS=$?
 fi
 
-if [[ -n $TRAVIS_TAG && $TRAVIS_PULL_REQUEST == 'false' && $EXIT_STATUS -eq 0 ]]; then
+if [[ -n $TRAVIS_TAG ]] || [[ $TRAVIS_PULL_REQUEST == 'false' && $EXIT_STATUS -eq 0 ]]; then
+
     echo "Publishing archives"
 
     if [[ -n $TRAVIS_TAG ]]; then
@@ -27,6 +28,7 @@ if [[ -n $TRAVIS_TAG && $TRAVIS_PULL_REQUEST == 'false' && $EXIT_STATUS -eq 0 ]]
     fi
 
     echo "Building docs and publish to gh-pages branch.."
+
 	./gradlew docs --stacktrace
 
 	git config --global user.name "$GIT_NAME"
@@ -35,7 +37,8 @@ if [[ -n $TRAVIS_TAG && $TRAVIS_PULL_REQUEST == 'false' && $EXIT_STATUS -eq 0 ]]
 	echo "https://$GH_TOKEN:@github.com" > ~/.git-credentials
 
     echo " "
-    echo "Cloning gh-pages branch from $TRAVIS_REPO_SLUG"
+    echo "** Updating gh-pages branch **"
+
 	git clone https://${GH_TOKEN}@github.com/${TRAVIS_REPO_SLUG}.git -b gh-pages gh-pages --single-branch > /dev/null
 	cd gh-pages
 
@@ -48,14 +51,14 @@ if [[ -n $TRAVIS_TAG && $TRAVIS_PULL_REQUEST == 'false' && $EXIT_STATUS -eq 0 ]]
 	# If this is the master branch then update the snapshot
     if [[ $TRAVIS_BRANCH == 'master' ]]; then
       mkdir -p snapshot
-      cp -r ../docs/. ./snapshot/
+      cp -r ../build/docs/. ./snapshot/
       git add snapshot/*
     fi
 
 	# If there is a tag present then this becomes the latest
     if [[ -n $TRAVIS_TAG ]]; then
         mkdir -p latest
-        cp -r ../docs/. ./latest/
+        cp -r ../build/docs/. ./latest/
         git add latest/*
 
         version="$TRAVIS_TAG"
@@ -64,11 +67,11 @@ if [[ -n $TRAVIS_TAG && $TRAVIS_PULL_REQUEST == 'false' && $EXIT_STATUS -eq 0 ]]
         majorVersion="${majorVersion}x"
 
         mkdir -p "$version"
-        cp -r ../docs/. "./$version/"
+        cp -r ../build/docs/. "./$version/"
         git add "$version/*"
 
         mkdir -p "$majorVersion"
-        cp -r ../docs/. "./$majorVersion/"
+        cp -r ../build/docs/. "./$majorVersion/"
         git add "$majorVersion/*"
 
     fi
