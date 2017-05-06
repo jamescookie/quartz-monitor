@@ -19,11 +19,6 @@ class QuartzMonitorGrailsPlugin {
     def loadAfter = ['quartz']
 
     def doWithSpring = {
-        quartzJobFactory(QuartzMonitorJobFactory) {
-            if (manager?.hasGrailsPlugin("hibernate") || manager?.hasGrailsPlugin("hibernate4")) {
-                sessionFactory = ref("sessionFactory")
-            }
-            pluginManager = ref("pluginManager")
-        }
+        quartzJobFactory(QuartzMonitorJobFactory)
     }
 }
