@@ -1,4 +1,4 @@
-#Schwartz Monitor Plugin for Grails
+# Schwartz Monitor Plugin for Grails
 
 This plugin is a fork of the [quartz-monitor](https://grails.org/plugin/quartz-monitor) plugin and supports the Grails [Schwartz](https://plugins.grails.org/plugin/schwartz) plugin instead of grails-quartz.
 
