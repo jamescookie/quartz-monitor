@@ -1,0 +1,7 @@
+[[listeners]]
+== Listeners
+
+The plugin uses listeners to monitor the Quartz Scheduler status.
+
+=== grails.plugins.schwartz.listener.QuartzSchedulerListener
+Main Listener to monitor Scheduler configuration, runs, etc.

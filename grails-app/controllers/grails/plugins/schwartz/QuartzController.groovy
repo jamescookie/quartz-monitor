@@ -1,19 +1,16 @@
 package grails.plugins.schwartz
 
-import com.agileorbit.schwartz.QuartzMonitorJobFactory
+import org.grails.plugins.schwartz.monitor.QuartzMonitorService
+import org.quartz.*
+import org.quartz.impl.matchers.GroupMatcher
 
 import static org.quartz.impl.matchers.GroupMatcher.jobGroupEquals
-
-import org.quartz.CronTrigger
-import org.quartz.Scheduler
-import org.quartz.Trigger
-import org.quartz.TriggerKey
-import org.quartz.impl.matchers.GroupMatcher
 
 class QuartzController {
     static final Map<String, Trigger> triggers = [:]
 
     Scheduler quartzScheduler
+    QuartzMonitorService quartzMonitorService
 
     def index = {
         redirect(action: "list")
@@ -23,12 +20,12 @@ class QuartzController {
         def jobsList = []
         def listJobGroups = quartzScheduler.jobGroupNames
         listJobGroups?.each {jobGroup ->
-            quartzScheduler.getJobKeys(jobGroupEquals(jobGroup))?.each {jobKey ->
+            quartzScheduler.getJobKeys(jobGroupEquals(jobGroup))?.each { JobKey jobKey ->
                 def jobName = jobKey.name
                 List<Trigger> triggers = quartzScheduler.getTriggersOfJob(jobKey)
                 if (triggers) {
                     triggers.each {trigger ->
-                        def currentJob = createJob(jobGroup, jobName, jobsList, trigger.key.name)
+                        def currentJob = createJobModel(jobGroup, jobKey, jobsList, trigger.key.name)
                         currentJob.trigger = trigger
                         def state = quartzScheduler.getTriggerState(trigger.key)
                         currentJob.triggerStatus = Trigger.TriggerState.find {
@@ -36,15 +33,15 @@ class QuartzController {
                         } ?: "UNKNOWN"
                     }
                 } else {
-                    createJob(jobGroup, jobName, jobsList)
+                    createJobModel(jobGroup, jobKey, jobsList)
                 }
             }
         }
         [jobs: jobsList, now: new Date(), schedulerInStandbyMode: quartzScheduler.isInStandbyMode()]
     }
 
-    private createJob(String jobGroup, String jobName, List jobsList, String triggerName = "") {
-        def currentJob = [group: jobGroup, name: jobName] + (QuartzMonitorJobFactory.jobRuns[triggerName] ?: [:])
+    private createJobModel(String jobGroup, JobKey jobKey, List jobsList, String triggerName = "") {
+        def currentJob = [group: jobGroup, name: jobKey.name] + (quartzMonitorService.getAdditionalJobDetails(jobKey) ?: [:])
         jobsList << currentJob
         return currentJob
     }

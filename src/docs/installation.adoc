@@ -1,0 +1,19 @@
+[[installation]]
+== Installation
+
+To use the plugin, you must have the grails-schwartz plugin already installed in your project.
+
+=== "`Install`" the plugin by adding it to build.gradle
+
+Add a dependency for the plugin by adding it to the `dependencies` block in build.gradle:
+
+[source,groovy]
+[subs="attributes"]
+----
+dependencies {
+   ...
+   compile 'org.grails.plugins:schwartz-monitor:{project-version}'
+   ...
+}
+----
+
