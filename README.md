@@ -15,13 +15,16 @@ Once you have the Quartz/Schwartz plugin installed and have created some job ser
 are all running as desired.
 
 Simply add this plugin as a dependency to build.gradle, start your application and access the URL: 
-http://localhost:8080/&lt;yourapp&gt;/schwartz and you will find a list of all the Quartz job services you have created.
+http://localhost:8080/yourapp/quartz and you will find a list of all the Quartz job services you have created.
+
 ```groovy
 dependencies {
    ...
    compile "org.grails.plugins:schwartz-monitor:2.0-SNAPSHOT"
 }
 ```
+
+
 ## Enhanced Experience
 
 To have the page keep you constantly up to date requires [jQuery](http://grails.org/plugin/jquery). It will still work without jQuery,
