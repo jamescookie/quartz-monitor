@@ -1,19 +1,24 @@
 #Schwartz Monitor Plugin for Grails
 
-This plugin is a fork of the [quartz-monitor](https://grails.org/plugin/quartz-monitor) plugin and supports the Grails [Schwartz](https://plugins.grails.org/plugin/schwartz) plugin instead of grails-quartz.
+This plugin is a fork of the [quartz-monitor](https://grails.org/plugin/quartz-monitor) plugin and supports the Grails [Quartz](https://plugins.grails.org/plugin/quartz) and Grails [Schwartz](https://plugins.grails.org/plugin/schwartz) plugins.
 
 It allows you to view and administer all your Quartz job services in the web-ui.
 
 ##Prerequisites
 
-This plugin requires the Grails [Schwartz](https://plugins.grails.org/plugin/schwartz) and [Asset Pipeline](http://grails.org/plugin/asset-pipeline) plugins to run.
+This plugin requires the Grails Quartz or Grails Schwartz and [Asset Pipeline](http://grails.org/plugin/asset-pipeline) plugins to run.
 
 ##Usage
 
-Once you have the Schwartz plugin installed and have created some job services, then you will probably start wondering if they are all running as desired.
+Once you have the Quartz/Schwartz plugin installed and have created some job services, then you will probably start wondering if they are all running as desired.
 
-Simply "install" the plugin in build.gradle, start your application and access the URL: http://localhost:8080/<yourapp>/quartz and you will find a list of all the Quartz job services you have created.
-
+Simply add this plugin as a dependency to build.gradle, start your application and access the URL: http://localhost:8080/<yourapp>/schwartz and you will find a list of all the Quartz job services you have created.
+```groovy
+dependencies {
+   ...
+   compile "org.grails.plugins:schwartz-monitor:2.0-SNAPSHOT"
+}
+```
 ##Enhanced Experience
 
 To have the page keep you constantly up to date requires [jQuery](http://grails.org/plugin/jquery). It will still work without jQuery, but it won't look as good.
