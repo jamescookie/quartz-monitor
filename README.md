@@ -1,6 +1,7 @@
 # Schwartz Monitor Plugin for Grails
 
-This plugin is a fork of the [quartz-monitor](https://grails.org/plugin/quartz-monitor) plugin and supports the Grails [Quartz](https://plugins.grails.org/plugin/quartz) and Grails [Schwartz](https://plugins.grails.org/plugin/schwartz) plugins.
+This plugin is a fork of the [quartz-monitor](https://grails.org/plugin/quartz-monitor) plugin and supports
+the Grails [Quartz](https://plugins.grails.org/plugin/quartz) and Grails [Schwartz](https://plugins.grails.org/plugin/schwartz) plugins.
 
 It allows you to view and administer all your Quartz job services in the web-ui.
 
@@ -10,9 +11,11 @@ This plugin requires the Grails Quartz or Grails Schwartz and [Asset Pipeline](h
 
 ## Usage
 
-Once you have the Quartz/Schwartz plugin installed and have created some job services, then you will probably start wondering if they are all running as desired.
+Once you have the Quartz/Schwartz plugin installed and have created some job services, then you will probably start wondering if they 
+are all running as desired.
 
-Simply add this plugin as a dependency to build.gradle, start your application and access the URL: http://localhost:8080/<yourapp>/schwartz and you will find a list of all the Quartz job services you have created.
+Simply add this plugin as a dependency to build.gradle, start your application and access the URL: 
+http://localhost:8080/&lt;yourapp&gt;/schwartz and you will find a list of all the Quartz job services you have created.
 ```groovy
 dependencies {
    ...
@@ -21,7 +24,8 @@ dependencies {
 ```
 ## Enhanced Experience
 
-To have the page keep you constantly up to date requires [jQuery](http://grails.org/plugin/jquery). It will still work without jQuery, but it won't look as good.
+To have the page keep you constantly up to date requires [jQuery](http://grails.org/plugin/jquery). It will still work without jQuery,
+but it won't look as good.
 
 ## Configuration
 
@@ -45,7 +49,8 @@ Will add javascript to the page in order to show a clock with the current time, 
 
 ## Internals
 
-Compared to the quartz-monitor plugin, this plugin is agnostic to the used quartz plugin, as it relies on Quartz itself and does not extend any quartz-plugin factories.
+Compared to the quartz-monitor plugin, this plugin is agnostic to the used quartz plugin, as it relies on Quartz itself and does not extend
+any quartz-plugin factories.
 Its implemented to register a org.quartz.JobListener, which listens to all Job tasks. 
 This listener updates Job metrics in the QuartzMonitorService, which also provides additional figures like the startTime of a Job.
 
