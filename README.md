@@ -49,4 +49,4 @@ Compared to the quartz-monitor plugin, this plugin is agnostic to the used quart
 Its implemented to register a org.quartz.JobListener, which listens to all Job tasks. 
 This listener updates Job metrics in the QuartzMonitorService, which also provides additional figures like the startTime of a Job.
 
-[![Build Status](https://api.travis-ci.org/robertoschwald/grails-schwartz-monitor.png?branch=rewrite)](http://travis-ci.org/robertoschwald/grails-schwartz-monitor)
+[![Build Status](https://travis-ci.org/robertoschwald/grails-schwartz-monitor.svg?branch=master)](http://travis-ci.org/robertoschwald/grails-schwartz-monitor)
