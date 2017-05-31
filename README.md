@@ -1,14 +1,14 @@
-#Schwartz Monitor Plugin for Grails
+# Schwartz Monitor Plugin for Grails
 
 This plugin is a fork of the [quartz-monitor](https://grails.org/plugin/quartz-monitor) plugin and supports the Grails [Quartz](https://plugins.grails.org/plugin/quartz) and Grails [Schwartz](https://plugins.grails.org/plugin/schwartz) plugins.
 
 It allows you to view and administer all your Quartz job services in the web-ui.
 
-##Prerequisites
+## Prerequisites
 
 This plugin requires the Grails Quartz or Grails Schwartz and [Asset Pipeline](http://grails.org/plugin/asset-pipeline) plugins to run.
 
-##Usage
+## Usage
 
 Once you have the Quartz/Schwartz plugin installed and have created some job services, then you will probably start wondering if they are all running as desired.
 
@@ -19,27 +19,27 @@ dependencies {
    compile "org.grails.plugins:schwartz-monitor:2.0-SNAPSHOT"
 }
 ```
-##Enhanced Experience
+## Enhanced Experience
 
 To have the page keep you constantly up to date requires [jQuery](http://grails.org/plugin/jquery). It will still work without jQuery, but it won't look as good.
 
-##Configuration
+## Configuration
 
 There are various configuration options, all start with `quartz.monitor`:
 
-###layout
+### layout
 
 Allows you to change the sitemesh layout that page will use. Defaults to 'main'.
 
-###showTriggerNames
+### showTriggerNames
 
 If this is set to true, then the names of the triggers will be shown in the list - useful if you have multiple triggers for the same job.
 
-###showCountdown
+### showCountdown
 
 Will add javascript to the page in order to show a countdown to when the job will fire next, unless this is set to 'false'.
 
-###showTickingClock
+### showTickingClock
 
 Will add javascript to the page in order to show a clock with the current time, unless this is set to 'false'.
 
