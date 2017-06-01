@@ -1,9 +1,9 @@
-# Schwartz Monitor Plugin for Grails
+# Quartz Monitor Plugin for Grails
 
-This plugin is a fork of the [quartz-monitor](https://grails.org/plugin/quartz-monitor) plugin and supports
-the Grails [Quartz](https://plugins.grails.org/plugin/quartz) and Grails [Schwartz](https://plugins.grails.org/plugin/schwartz) plugins.
+This Grails plugin allows you to monitor and control Quartz jobs. 
+It supports the Grails [Quartz](https://plugins.grails.org/plugin/quartz) and Grails [Schwartz](https://plugins.grails.org/plugin/schwartz) plugins.
 
-It allows you to view and administer all your Quartz job services in the web-ui.
+It allows you to view and administer all your Quartz jobs in the web-ui.
 
 ## Prerequisites
 
@@ -20,10 +20,9 @@ http://localhost:8080/yourapp/quartz and you will find a list of all the Quartz 
 ```groovy
 dependencies {
    ...
-   compile "org.grails.plugins:schwartz-monitor:2.0-SNAPSHOT"
+   compile quartz
 }
 ```
-
 
 ## Enhanced Experience
 
@@ -52,9 +51,6 @@ Will add javascript to the page in order to show a clock with the current time, 
 
 ## Internals
 
-Compared to the quartz-monitor plugin, this plugin is agnostic to the used quartz plugin, as it relies on Quartz itself and does not extend
-any quartz-plugin factories.
-Its implemented to register a org.quartz.JobListener, which listens to all Job tasks. 
+This plugin is agnostic to the used Grails quartz plugin, as it relies on Quartz itself and does not extend any quartz-plugin factories.
+It registers a org.quartz.JobListener, which listens to all Job tasks. 
 This listener updates Job metrics in the QuartzMonitorService, which also provides additional figures like the startTime of a Job.
-
-[![Build Status](https://travis-ci.org/robertoschwald/grails-schwartz-monitor.svg?branch=master)](http://travis-ci.org/robertoschwald/grails-schwartz-monitor)

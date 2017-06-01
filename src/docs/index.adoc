@@ -1,5 +1,5 @@
-= Schwartz Monitor Plugin - Reference Documentation
-Robert Oschwald
+= Quartz Monitor Plugin - Reference Documentation
+James Cook, Robert Oschwald
 
 :apidocs: http://www.quartz-scheduler.org/api/2.2.1/
 :apidocs_spring: http://docs.spring.io/spring/docs/4.2.x/javadoc-api/
@@ -10,8 +10,6 @@ include::introduction.adoc[]
 include::installation.adoc[]
 
 include::configuration.adoc[]
-
-include::comparisonWithQuartzMonitorPlugin.adoc[]
 
 include::listeners.adoc[]
 

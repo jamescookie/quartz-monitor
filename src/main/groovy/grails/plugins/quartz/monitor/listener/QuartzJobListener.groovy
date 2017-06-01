@@ -1,8 +1,8 @@
-package grails.plugins.schwartz.monitor.listener
+package grails.plugins.quartz.monitor.listener
 
 import groovy.transform.CompileStatic
 import groovy.util.logging.Slf4j
-import org.grails.plugins.schwartz.monitor.QuartzMonitorService
+import org.grails.plugins.quartz.monitor.QuartzMonitorService
 import org.quartz.JobExecutionContext
 import org.quartz.JobExecutionException
 import org.quartz.JobListener

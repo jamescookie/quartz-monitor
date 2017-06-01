@@ -94,7 +94,7 @@ bintray {
         publicDownloadNumbers = true
         version {
             name = project.version
-            desc = 'Grails Schwartz-Monitor Plugin'
+            desc = 'Grails Quartz-Monitor Plugin'
             attributes = ['grails-plugin': "$project.group:$project.name"]
         }
     }

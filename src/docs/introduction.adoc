@@ -1,9 +1,15 @@
 [[introduction]]
-== Introduction to the Schwartz Monitor Plugin
+== Introduction to the Quartz Monitor Plugin
 
-The Schwartz Monitor plugin can be used to monitor Quartz Scheduler Jobs in the web-ui.
+The Quartz Monitor plugin can be used to monitor Quartz Scheduler Jobs in the web-ui.
 
 === Release History
+
+* June 2017
+** Backport changes to the Quartz-Monitor codebase to prepare a PR to the original plugin repository.
+
+* December 2016
+** Working rewrite version which is indedendent of used Grails Quartz plugin. Does not extend any existing JobFactories anymore, but registeres a JobListener
 
 * November 2016
 ** work in progress. Master currently holds an 1:1 implementation based on the quartz-monitor plugin.

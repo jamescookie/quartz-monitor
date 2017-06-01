@@ -1,4 +1,4 @@
-#Making changes to Schwartz Monitor
+# Making changes to Quartz Monitor
 
 * Increment version number in build.gradle and add -SNAPSHOT (whilst working on it)
 * Make changes

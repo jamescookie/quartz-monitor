@@ -1,4 +1,4 @@
-package org.grails.plugins.schwartz.monitor
+package org.grails.plugins.quartz.monitor
 
 import grails.test.mixin.TestFor
 import org.quartz.JobKey
