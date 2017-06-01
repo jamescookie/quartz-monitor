@@ -11,10 +11,6 @@ echo "TRAVIS_TAG: $TRAVIS_TAG"
 rm -rf build
 ./gradlew clean check install --stacktrace || EXIT_STATUS=$?
 
-if [[ $EXIT_STATUS -eq 0 ]]; then
-	./integration-test-app/run_integration_tests.sh || EXIT_STATUS=$?
-fi
-
 if [[ -n $TRAVIS_TAG && $TRAVIS_PULL_REQUEST == 'false' && $EXIT_STATUS -eq 0 ]]; then
   echo "Uploading to bintray"
 	./gradlew bintrayUpload --stacktrace
