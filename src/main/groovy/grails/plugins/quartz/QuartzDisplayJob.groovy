@@ -24,9 +24,7 @@ class QuartzDisplayJob implements Job {
     void execute(final JobExecutionContext context) throws JobExecutionException {
         jobDetails.clear()
         def jobJob = job.job
-        if (hasProperty(jobJob, 'description') && jobJob.description) {
-            jobDetails.name = jobJob.description
-        }
+
         jobDetails.lastRun = new Date()
         jobDetails.status = "running"
         long start = System.currentTimeMillis()
