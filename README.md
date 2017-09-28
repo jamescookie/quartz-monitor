@@ -9,7 +9,7 @@ It allows you to view and administer all your Quartz job services in the web-ui.
 
 This plugin requires the Grails Quartz or Grails Schwartz and [Asset Pipeline](http://grails.org/plugin/asset-pipeline) plugins to run.
 
-## Usage
+## Installation
 
 This plugin is a work-in-progress fork of the Grails Quartz Monitor plugin. For now it is not planned to release this plugin as a standalone plugin. We already sent a PR to the Grails-Quartz-Monitor repository to add Grails Schwartz support to the original plugin. See https://github.com/jamescookie/quartz-monitor/pull/42
 
@@ -27,13 +27,10 @@ dependencies {
 }
 ```
 
-Once you have the Quartz/Schwartz plugin installed and have created some job services, then you will probably start wondering if they 
-are all running as desired.
+## Usage
 
-Simply add this plugin as a dependency to build.gradle, start your application and access the URL: 
+Once you have the schwartz-monitor plugin installed and have created some job services, start your application and access the URL: 
 http://localhost:8080/yourapp/quartz and you will find a list of all the Quartz job services you have created.
-
-
 
 
 ## Enhanced Experience
