@@ -63,25 +63,36 @@ task wrapper(type: Wrapper) {
     gradleVersion = gradleWrapperVersion
 }
 
-bintray {
-    user = System.getenv('BINTRAY_USER')
-    key = System.getenv('BINTRAY_KEY')
-    publications = ['maven']
-    publish = true
-    pkg {
-        repo = 'plugins'
-        userOrg = '' // If you want to publish to an organization
-        name = "$project.name"
-        websiteUrl = "https://robertoschwald.github.io/grails-${project.name}-plugin"
-        issueTrackerUrl = "https://github.com/robertoschwald/grails-${project.name}-plugin/issues"
-        vcsUrl = "https://github.com/robertoschwald/grails-${project.name}-plugin"
-        licenses = project.hasProperty('license') ? [project.license] : ['Apache-2.0']
-        publicDownloadNumbers = true
-        version {
-            name = project.version
-            desc = 'Grails Schwartz-Monitor Plugin'
-            attributes = ['grails-plugin': "$project.group:$project.name"]
+grailsPublish {
+    desc = 'Schwartz Monitor'
+    developers = [robertoschwald: 'Robert Oschwald']
+    githubSlug = 'robertoschwald/grails-schwartz-monitor'
+    issueTrackerUrl = 'https://github.com/robertoschwald/grails-schwartz-monitor/issues'
+    license {
+        name = 'Apache-2.0'
+    }
+    title = 'Schwartz Monitor Plugin'
+    userOrg = 'robertoschwald'
+    repo = 'plugins'
+    vcsUrl = 'https://github.com/robertoschwald/grails-schwartz-monitor/'
+}
+
+task docs(dependsOn: [asciidoctor, groovydoc]) << {
+    File dir = new File(buildDir, 'docs')
+
+    ['pdf', 'epub'].each { String ext ->
+        File f = new File(dir, 'index.' + ext)
+        if (f.exists()) {
+            f.renameTo new File(dir, project.name + '-' + project.version + '.' + ext)
         }
+    }
+
+    new File(buildDir, 'docs/ghpages.html') << file('src/docs/index.tmpl').text.replaceAll('@VERSION@', project.version)
+
+    copy {
+        from 'src/docs'
+        into new File(buildDir, 'docs').path
+        include '**/*.jpg', '**/*.png'
     }
 }
 
