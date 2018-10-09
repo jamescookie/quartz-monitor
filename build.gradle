@@ -77,26 +77,6 @@ grailsPublish {
     vcsUrl = 'https://github.com/robertoschwald/grails-schwartz-monitor/'
 }
 
-task docs(dependsOn: [asciidoctor, groovydoc]) << {
-    File dir = new File(buildDir, 'docs')
-
-    ['pdf', 'epub'].each { String ext ->
-        File f = new File(dir, 'index.' + ext)
-        if (f.exists()) {
-            f.renameTo new File(dir, project.name + '-' + project.version + '.' + ext)
-        }
-    }
-
-    new File(buildDir, 'docs/ghpages.html') << file('src/docs/index.tmpl').text.replaceAll('@VERSION@', project.version)
-
-    copy {
-        from 'src/docs'
-        into new File(buildDir, 'docs').path
-        include '**/*.jpg', '**/*.png'
-    }
-}
-
-
 task docs(dependsOn: ['asciidoctor', 'groovydoc']) {
     File dir = new File(buildDir, 'docs')
     dir.mkdirs()
