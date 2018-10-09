@@ -1,3 +1,5 @@
+[![Build Status](https://travis-ci.org/robertoschwald/grails-schwartz-monitor.svg?branch=master)](https://travis-ci.org/robertoschwald/grails-schwartz-monitor)
+
 # Schwartz Monitor Plugin for Grails
 
 This plugin is a fork of the [quartz-monitor](https://grails.org/plugin/quartz-monitor) plugin and supports
@@ -7,7 +9,9 @@ It allows you to view and administer all your Quartz job services in the web-ui.
 
 ## Prerequisites
 
-This plugin requires the Grails Quartz or Grails Schwartz and [Asset Pipeline](http://grails.org/plugin/asset-pipeline) plugins to run.
+This plugin requires the [Grails Quartz](http://plugins.grails.org/plugin/grails/quartz)
+or [Grails Schwartz](http://plugins.grails.org/plugin/agileorbit/schwartz)
+and [Asset Pipeline](http://grails.org/plugin/asset-pipeline) plugins to run.
 
 ## Installation
 
@@ -57,6 +61,10 @@ Will add javascript to the page in order to show a countdown to when the job wil
 ### showTickingClock
 
 Will add javascript to the page in order to show a clock with the current time, unless this is set to 'false'.
+
+## Documentation
+
+http://robertoschwald.github.io/grails-schwartz-monitor
 
 ## Internals
 
