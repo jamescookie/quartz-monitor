@@ -13,7 +13,7 @@ class QuartzMonitorService {
     static final String START_DATE = "startDate"
     static final String END_DATE = "lastRun"
 
-    ConcurrentHashMap<JobKey, Map<String, Object>> additionalJobDetails = new ConcurrentHashMap<JobKey, Map>()
+    ConcurrentHashMap<JobKey, Map<String, Object>> additionalJobDetails = new ConcurrentHashMap()
 
     def updateJobStartDate(JobKey key, Date startDate) {
         if (!additionalJobDetails.contains(key)) additionalJobDetails.put(key, [:])
