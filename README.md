@@ -67,7 +67,7 @@ Will add javascript to the page in order to show a clock with the current time, 
 http://robertoschwald.github.io/grails-schwartz-monitor
 
 ## Securing the Controller
-If you use a security plugin (Spring-Security-Core, etc), you must ensure the controller methods are secured. E.g. in Spring-Security-Core, add a rule which is apropriate for your security needs:
+If you use a security plugin (Spring-Security-Core, etc), you must ensure the controller methods are secured. E.g. when using Spring-Security-Core, add a rule which is appropriate for your security needs:
 ```groovy
 [pattern:'/quartz/**',              access:['ROLE_ADMIN']],
 ```
