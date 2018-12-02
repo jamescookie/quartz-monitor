@@ -72,23 +72,25 @@ assets {
 }
 
 grailsPublish {
-    desc = 'Schwartz Monitor'
-    developers = [robertoschwald: 'Robert Oschwald']
+    user = System.getenv('BINTRAY_USER')
+    key = System.getenv('BINTRAY_KEY')
+    repo = 'plugins'
     githubSlug = 'robertoschwald/grails-schwartz-monitor'
     issueTrackerUrl = 'https://github.com/robertoschwald/grails-schwartz-monitor/issues'
-    license {
-        name = 'Apache-2.0'
-    }
-    title = 'Schwartz Monitor Plugin'
-    userOrg = 'robertoschwald'
-    repo = 'plugins'
     vcsUrl = 'https://github.com/robertoschwald/grails-schwartz-monitor/'
+    license {
+        name = project.hasProperty('license') ? [project.license] : ['Apache-2.0']
+    }
+    title = "Grails Schwartz Monitor"
+    desc = "Monitor Quartz Jobs. Supports Grails-Schwartz and Grails-Quartz."
+    developers = [robertoschwald:"Robert Oschwald"]
+    userOrg = 'symentis GmbH'
 }
 
 task docs(dependsOn: ['asciidoctor', 'groovydoc']) {
     File dir = new File(buildDir, 'docs')
     dir.mkdirs()
-    
+
     ['pdf', 'epub'].each { String ext ->
         File f = new File(dir, 'index.' + ext)
         if (f.exists()) {
@@ -103,18 +105,6 @@ task docs(dependsOn: ['asciidoctor', 'groovydoc']) {
         into new File(buildDir, 'docs').path
         include '**/*.jpg', '**/*.png'
     }
-}
-
-grailsPublish {
-    user = System.getenv('BINTRAY_USER')
-    key = System.getenv('BINTRAY_KEY')
-    githubSlug = 'robertoschwald/grails-schwartz-monitor'
-    license {
-        name = project.hasProperty('license') ? [project.license] : ['Apache-2.0']
-    }
-    title = "Grails Schwrtz Monitor"
-    desc = "Grails Schwartz Monitor Plugin for Grails 3"
-    developers = [robertoschwald:"Robert Oschwald"]
 }
 
 asciidoctor {
@@ -146,26 +136,5 @@ asciidoctor {
       toclevels            : '2'
 }
 
-task docs(dependsOn: 'asciidoctor') {
-    doLast {
-        File dir = new File(buildDir, 'docs')
-        dir.mkdirs()
-
-        ['pdf', 'epub'].each { String ext ->
-            File f = new File(dir, 'index.' + ext)
-            if (f.exists()) {
-                f.renameTo new File(dir, project.name + '-' + project.version + '.' + ext)
-            }
-        }
-
-        new File(buildDir, 'docs/ghpages.html') << file('src/docs/templates/index.tmpl').text.replaceAll("@VERSION@", project.version).replaceAll("@DOCDATE@", buildDate())
-
-        copy {
-            from 'src/docs'
-            into new File(buildDir, 'docs').path
-            include '**/*.png'
-        }
-    }
-}
 
 
