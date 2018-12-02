@@ -13,7 +13,7 @@ All config options must be in the `quartz` block in `application.groovy` (or mak
 
 |quartz.monitor.layout
 |`main`
-|Allows you to change the layout that page will use.
+|Allows you to change the layout that views will use.
 
 |quartz.monitor.showTriggerNames
 |`false`
