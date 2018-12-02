@@ -65,6 +65,8 @@ task wrapper(type: Wrapper) {
     gradleVersion = gradleWrapperVersion
 }
 
+bootRepackage.enabled = false
+
 assets {
     packagePlugin = true
 }
@@ -103,6 +105,18 @@ task docs(dependsOn: ['asciidoctor', 'groovydoc']) {
     }
 }
 
+grailsPublish {
+    user = System.getenv('BINTRAY_USER')
+    key = System.getenv('BINTRAY_KEY')
+    githubSlug = 'robertoschwald/grails-schwartz-monitor'
+    license {
+        name = project.hasProperty('license') ? [project.license] : ['Apache-2.0']
+    }
+    title = "Grails Schwrtz Monitor"
+    desc = "Grails Schwartz Monitor Plugin for Grails 3"
+    developers = [robertoschwald:"Robert Oschwald"]
+}
+
 asciidoctor {
     separateOutputDirs = false
     sourceDir = file('src/docs')
@@ -131,4 +145,27 @@ asciidoctor {
       toc2                 : '',
       toclevels            : '2'
 }
+
+task docs(dependsOn: 'asciidoctor') {
+    doLast {
+        File dir = new File(buildDir, 'docs')
+        dir.mkdirs()
+
+        ['pdf', 'epub'].each { String ext ->
+            File f = new File(dir, 'index.' + ext)
+            if (f.exists()) {
+                f.renameTo new File(dir, project.name + '-' + project.version + '.' + ext)
+            }
+        }
+
+        new File(buildDir, 'docs/ghpages.html') << file('src/docs/templates/index.tmpl').text.replaceAll("@VERSION@", project.version).replaceAll("@DOCDATE@", buildDate())
+
+        copy {
+            from 'src/docs'
+            into new File(buildDir, 'docs').path
+            include '**/*.png'
+        }
+    }
+}
+
 
