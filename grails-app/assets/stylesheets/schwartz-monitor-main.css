@@ -7,33 +7,68 @@
     display: none;
 }
 
+#quartz-jobs table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+#quartz-jobs td, #quartz-jobs th {
+    border: 1px solid #ddd;
+    padding: 8px;
+}
+
+#quartz-jobs tr:nth-child(even) {
+    background-color: #f2f2f2;
+}
+
+#quartz-jobs tr:hover {
+    background-color: #ddd;
+}
+
+#quartz-jobs th {
+    padding-top: 12px;
+    padding-bottom: 12px;
+    text-align: left;
+    background-color: #7c94af;
+    color: white;
+}
+
 #quartz-jobs .quartz-actions {
     padding: 0;
 }
+
 #quartz-jobs .quartz-actions img {
     padding: 1px 1px 0 3px;
 }
+
 #quartz-jobs .quartz-status {
     padding-left: 25px;
 }
+
 #quartz-jobs .not-run {
     background: url(../images/not-run.gif) 5px 50% no-repeat;
 }
+
 #quartz-jobs .running {
     background: url(../images/running.gif) 5px 50% no-repeat;
 }
+
 #quartz-jobs .complete {
     background: url(../images/complete.gif) 5px 50% no-repeat;
 }
+
 #quartz-jobs .error {
     background: url(../images/error.gif) 5px 50% no-repeat;
 }
+
 .list {
     clear: both;
 }
+
 #quartz-title {
     position: relative;
 }
+
 #quartz-title img {
     position: absolute;
     top: -5px;
