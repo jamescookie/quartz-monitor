@@ -18,7 +18,7 @@ and [Asset Pipeline](http://grails.org/plugin/asset-pipeline) plugins to run.
 This plugin is a work-in-progress fork of the Grails Quartz Monitor plugin. For now it is not planned to release this plugin as a standalone plugin. We already sent a PR to the Grails-Quartz-Monitor repository to add Grails Schwartz support to the original plugin. See https://github.com/jamescookie/quartz-monitor/pull/42
 
 If however you want to install this grails-schwartz-monitor plugin in the meantime until it is merged, perform:
-```
+```sh
 gradle install
 ```
 
@@ -68,7 +68,7 @@ http://robertoschwald.github.io/grails-schwartz-monitor
 
 ## Securing the Controller
 If you use a security plugin (Spring-Security-Core, etc), you must ensure the controller methods are secured. E.g. in Spring-Security-Core, add a rule which is apropriate for your security needs:
-```
+```groovy
 [pattern:'/quartz/**',              access:['ROLE_ADMIN']],
 ```
 
