@@ -9,6 +9,7 @@ buildscript {
     }
     dependencies {
         classpath "org.grails:grails-gradle-plugin:$grailsVersion"
+        classpath "com.bertramlabs.plugins:asset-pipeline-gradle:$assetPipelineVersion"
         classpath 'org.asciidoctor:asciidoctor-gradle-plugin:1.5.3'
         classpath 'org.asciidoctor:asciidoctorj-epub3:1.5.0-alpha.6'
         classpath 'org.asciidoctor:asciidoctorj-pdf:1.5.0-alpha.11'
@@ -24,6 +25,7 @@ apply plugin: 'idea'
 apply plugin: 'org.grails.grails-plugin'
 apply plugin: 'org.grails.grails-plugin-publish'
 apply plugin: 'org.grails.grails-gsp'
+apply plugin: "com.bertramlabs.asset-pipeline"
 apply plugin: 'org.asciidoctor.convert'
 
 sourceCompatibility = 1.7
@@ -54,13 +56,17 @@ dependencies {
 
     testCompile "org.grails:grails-plugin-testing"
 
-    runtime "com.bertramlabs.plugins:asset-pipeline-grails:2.8.2"
+    runtime "com.bertramlabs.plugins:asset-pipeline-grails:$assetPipelineVersion"
 
     provided "com.agileorbit:schwartz:1.0.1"
 }
 
 task wrapper(type: Wrapper) {
     gradleVersion = gradleWrapperVersion
+}
+
+assets {
+    packagePlugin = true
 }
 
 grailsPublish {
