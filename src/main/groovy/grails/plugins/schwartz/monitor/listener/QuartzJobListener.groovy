@@ -43,6 +43,6 @@ class QuartzJobListener implements JobListener {
         } else {
             log.info "${context.jobDetail.key}: finished with: ${context.result}"
         }
-        quartzMonitorService.updateJobEndDate(context.jobDetail.key, new Date())
+        quartzMonitorService.updateJobEndDate(context.jobDetail.key, new Date(), jobException)
     }
 }
