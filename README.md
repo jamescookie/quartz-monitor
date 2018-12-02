@@ -70,6 +70,7 @@ http://robertoschwald.github.io/grails-schwartz-monitor
 If you use a security plugin (Spring-Security-Core, etc), you must ensure the controller methods are secured. E.g. in Spring-Security-Core, add a rule which is apropriate for your security needs:
 ```
 [pattern:'/quartz/**',              access:['ROLE_ADMIN']],
+```
 
 ## Internals
 
