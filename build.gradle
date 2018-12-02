@@ -13,11 +13,13 @@ buildscript {
         classpath 'org.asciidoctor:asciidoctor-gradle-plugin:1.5.3'
         classpath 'org.asciidoctor:asciidoctorj-epub3:1.5.0-alpha.6'
         classpath 'org.asciidoctor:asciidoctorj-pdf:1.5.0-alpha.11'
+        classpath "org.jfrog.buildinfo:build-info-extractor-gradle:latest.release"
     }
 }
 
-version file('version.txt').text.trim()
 group "org.grails.plugins"
+def versionTxt = file("${rootProject.projectDir}/version.txt")
+version = versionTxt.exists() ? versionTxt.text.trim() : '0.1'
 
 apply plugin: 'maven-publish'
 apply plugin: 'eclipse'
@@ -65,8 +67,6 @@ task wrapper(type: Wrapper) {
     gradleVersion = gradleWrapperVersion
 }
 
-bootRepackage.enabled = false
-
 assets {
     packagePlugin = true
 }
@@ -74,17 +74,16 @@ assets {
 grailsPublish {
     user = System.getenv('BINTRAY_USER')
     key = System.getenv('BINTRAY_KEY')
-    repo = 'plugins'
     githubSlug = 'robertoschwald/grails-schwartz-monitor'
     issueTrackerUrl = 'https://github.com/robertoschwald/grails-schwartz-monitor/issues'
     vcsUrl = 'https://github.com/robertoschwald/grails-schwartz-monitor/'
+    websiteUrl = project.hasProperty('websiteUrl') ? project.websiteUrl : "http://grails.org/plugin/$project.name"
     license {
         name = project.hasProperty('license') ? [project.license] : ['Apache-2.0']
     }
     title = "Grails Schwartz Monitor"
     desc = "Monitor Quartz Jobs. Supports Grails-Schwartz and Grails-Quartz."
     developers = [robertoschwald:"Robert Oschwald"]
-    userOrg = 'symentis GmbH'
 }
 
 task docs(dependsOn: ['asciidoctor', 'groovydoc']) {
