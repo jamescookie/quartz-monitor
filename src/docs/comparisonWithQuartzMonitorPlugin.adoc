@@ -3,6 +3,12 @@
 
 This plugin was initially based on the quartz-monitor plugin, but have changed during implementation in significant areas.
 
-The Quartz-Monitor plugin uses its own quartzJobFactory, 'QuartzMonitorJobFactory', which is a subclass of the underlying quartz plugins' GrailsJobFactory. This can lead to several problems, e.g. if your application needs to subclass the QuartzJobFactory.
+The Quartz-Monitor plugin uses its own quartzJobFactory, 'QuartzMonitorJobFactory',
+which is a subclass of the underlying quartz plugins' GrailsJobFactory.
+This can lead to several problems, e.g. if your application needs to subclass the QuartzJobFactory.
 
-The Schwartz-Monitor plugin uses listeners to monitor the Quartz Scheduler status, so it is basically independent of the underlying Quartz Plugin implementation (in theory, we will see how it works out).
+The Schwartz-Monitor plugin does not extend Quartz classes, but uses a QuartzJobListener to monitor the Quartz Scheduler status,
+so it is basically independent of the underlying Quartz Plugin implementation (in theory, we will see how it works out).
+
+The QuartzMonitorService is updated by the QuartzJobListener and stores additional job information in a local map, which is then
+added to the view model of jobs. This map holds infos like
