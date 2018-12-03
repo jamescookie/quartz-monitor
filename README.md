@@ -20,7 +20,7 @@ Add the plugin to your build.gradle dependencies:
 ```groovy
 dependencies {
    ...
-   compile "org.grails.plugins:schwartz-monitor:2.0"
+   compile "org.grails.plugins:schwartz-monitor:2.0.1"
 }
 ```
 
