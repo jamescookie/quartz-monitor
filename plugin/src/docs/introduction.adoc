@@ -5,7 +5,12 @@ The Schwartz Monitor plugin can be used to monitor Quartz Scheduler Jobs in the 
 
 === Release History
 
-* November 2016
-** work in progress. Master currently holds an 1:1 implementation based on the quartz-monitor plugin.
-** We currently rewrite the plugin to make the plugin independent of subclassing Factories and other anti-patterns. (Thanks to Burt).
+* 2.0.2
+** 2.0.1 caused asset-pipeline errors, as asset-pipeline-grails was a dependency
+
+* 2.0.1
+** Re-added jquery modules
+
+* 2.0
+** Initial Release of schwartz-monitor
 
