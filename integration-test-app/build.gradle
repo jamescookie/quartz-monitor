@@ -9,6 +9,7 @@ buildscript {
     dependencies {
         classpath "org.grails:grails-gradle-plugin:$grailsVersion"
         classpath 'com.bertramlabs.plugins:asset-pipeline-gradle:2.5.0'
+        classpath "com.agileorbit:schwartz:$schwartzPluginVersion"
     }
 }
 
@@ -72,7 +73,7 @@ dependencies {
 
     console "org.grails:grails-console"
 
-    compile "com.agileorbit:schwartz:1.0.0"
+    compile "com.agileorbit:schwartz:$schwartzPluginVersion"
 
     compile project(':schwartz-monitor')
 }

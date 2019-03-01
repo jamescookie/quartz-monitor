@@ -95,7 +95,7 @@ if [[ -n $TRAVIS_TAG ]] || [[ $TRAVIS_BRANCH == 'master' && $TRAVIS_PULL_REQUEST
   fi
 
 	git commit -a -m "Updating docs for Travis build: https://travis-ci.org/$TRAVIS_REPO_SLUG/builds/$TRAVIS_BUILD_ID"
-	echo "Pusing gh-pages to $TRAVIS_REPO_SLUG"
+	echo "Pushing gh-pages to $TRAVIS_REPO_SLUG"
 	git push origin gh-pages
   cd ..
   rm -rf gh-pages
