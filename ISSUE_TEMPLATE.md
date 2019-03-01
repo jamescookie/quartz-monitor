@@ -1,5 +1,5 @@
-Thanks for reporting an issue for schwartz-monitor. Please review the task list below before submitting the
-issue.
+Thanks for reporting an issue for schwartz-monitor.
+Please review the task list below before submitting the issue.
 
 
 > WARNING: Your issue report may be closed if the issue report is incomplete and does not include an example. Make sure the below tasks are completed!
