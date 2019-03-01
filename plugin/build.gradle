@@ -30,8 +30,7 @@ apply plugin: 'org.grails.grails-gsp'
 apply plugin: "com.bertramlabs.asset-pipeline"
 apply plugin: 'org.asciidoctor.convert'
 
-sourceCompatibility = 1.7
-targetCompatibility = 1.7
+sourceCompatibility = targetCompatibility = 1.8
 
 repositories {
     mavenLocal()
@@ -58,7 +57,7 @@ dependencies {
 
     testCompile "org.grails:grails-plugin-testing"
 
-    runtime "com.bertramlabs.plugins:asset-pipeline-grails:$assetPipelineVersion"
+    // runtime "com.bertramlabs.plugins:asset-pipeline-grails:$assetPipelineVersion"
 
     provided "com.agileorbit:schwartz:1.0.1"
 }
