@@ -55,15 +55,20 @@ Will add javascript to the page in order to show a countdown to when the job wil
 
 Will add javascript to the page in order to show a clock with the current time, unless this is set to 'false'.
 
-## Documentation
-
-http://robertoschwald.github.io/grails-schwartz-monitor
+## URL Mapping the Controller
+By default, the plugin does not set an URL-Mapping for the Schwartz Controller. Add a url-mapping to your URLMappings.groovy file:
+```
+"/quartz/$action?"(controller:"quartz")
 
 ## Securing the Controller
 If you use a security plugin (Spring-Security-Core, etc), you must ensure the controller methods are secured. E.g. when using Spring-Security-Core, add a rule which is appropriate for your security needs:
 ```groovy
 [pattern:'/quartz/**',              access:['ROLE_ADMIN']]
 ```
+
+## Documentation
+
+http://robertoschwald.github.io/grails-schwartz-monitor
 
 ## Internals
 
