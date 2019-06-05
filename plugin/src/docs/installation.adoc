@@ -17,3 +17,22 @@ dependencies {
 }
 ----
 
+=== URL Mapping controller
+The plugin does not provide a default URL-Mapping for the plugins QuartzController, so you are free to map it as you like.
+For this, you must add a url mapping to your URLMappings.groovy file:
+
+[source,groovy]
+[subs="attributes]
+----
+"/quartz/$action?"(controller:"quartz")
+----
+
+=== Securing the Controller
+
+If you use a security plugin (Spring-Security-Core, etc), you must ensure the controller methods are secured. E.g. when using Spring-Security-Core, add a rule which is appropriate for your security needs:
+
+[source,groovy]
+[subs="attributes"]
+----
+[pattern:'/quartz/**',              access:['ROLE_ADMIN']]
+----
