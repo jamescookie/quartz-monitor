@@ -59,6 +59,7 @@ Will add javascript to the page in order to show a clock with the current time, 
 By default, the plugin does not set an URL-Mapping for the Schwartz Controller. Add a url-mapping to your URLMappings.groovy file:
 ```
 "/quartz/$action?"(controller:"quartz")
+```
 
 ## Securing the Controller
 If you use a security plugin (Spring-Security-Core, etc), you must ensure the controller methods are secured. E.g. when using Spring-Security-Core, add a rule which is appropriate for your security needs:
