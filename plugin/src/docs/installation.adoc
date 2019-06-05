@@ -29,10 +29,20 @@ For this, you must add a url mapping to your URLMappings.groovy file:
 
 === Securing the Controller
 
-If you use a security plugin (Spring-Security-Core, etc), you must ensure the controller methods are secured. E.g. when using Spring-Security-Core, add a rule which is appropriate for your security needs:
+If you use a security plugin (Spring-Security-Core, etc), you must ensure the controller methods are secured. E.g. when using Spring-Security-Core, add a rule to application.groovy or runtime.groovy which is appropriate for your security needs:
 
 [source,groovy]
 [subs="attributes"]
 ----
-[pattern:'/quartz/**',              access:['ROLE_ADMIN']]
+grails {
+  plugin {
+    springsecurity {
+       interceptUrlMap = [
+          ...
+          [pattern:'/quartz/**',              access:['ROLE_ADMIN']]
+          ...
+       }
+    }
+  }
+}
 ----
