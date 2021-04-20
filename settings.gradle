@@ -1,4 +1,7 @@
+rootProject.name = 'grails-schwartz-monitor'
+
 include 'plugin'
 include 'integration-test-app'
+
 findProject(':plugin').name = 'schwartz-monitor'
-rootProject.name = 'grails-schwartz-monitor'
+
