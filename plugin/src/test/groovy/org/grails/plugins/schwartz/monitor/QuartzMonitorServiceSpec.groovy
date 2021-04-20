@@ -1,14 +1,10 @@
 package org.grails.plugins.schwartz.monitor
 
-import grails.test.mixin.TestFor
+import grails.testing.services.ServiceUnitTest
 import org.quartz.JobKey
 import spock.lang.Specification
 
-/**
- * See the API for {@link grails.test.mixin.services.ServiceUnitTestMixin} for usage instructions
- */
-@TestFor(QuartzMonitorService)
-class QuartzMonitorServiceSpec extends Specification {
+class QuartzMonitorServiceSpec extends Specification implements ServiceUnitTest<QuartzMonitorService> {
 
     def setup() {
     }
