@@ -25,6 +25,7 @@ apply plugin:"org.grails.grails-plugin"
 apply plugin:"org.grails.grails-plugin-publish"
 apply plugin:"asset-pipeline"
 apply plugin:"org.grails.grails-gsp"
+apply plugin:"org.asciidoctor.convert"
 
 ext {
     grailsVersion = project.grailsVersion
@@ -138,25 +139,28 @@ asciidoctor {
       toclevels            : '2'
 }
 
-task docs(dependsOn: ['asciidoctor', 'groovydoc']) {
-    File dir = new File(buildDir, 'docs')
-    dir.mkdirs()
+task docs(dependsOn: 'asciidoctor') {
+    doLast {
+        File dir = new File(buildDir, 'docs')
+        dir.mkdirs()
 
-    ['pdf', 'epub'].each { String ext ->
-        File f = new File(dir, 'index.' + ext)
-        if (f.exists()) {
-            f.renameTo new File(dir, project.name + '-' + project.version + '.' + ext)
+        ['pdf', 'epub'].each { String ext ->
+            File f = new File(dir, 'index.' + ext)
+            if (f.exists()) {
+                f.renameTo new File(dir, project.name + '-' + project.version + '.' + ext)
+            }
+        }
+
+        new File(buildDir, 'docs/ghpages.html') << file('src/docs/templates/index.tmpl').text.replaceAll("@VERSION@", project.version).replaceAll("@DOCDATE@", buildDate())
+
+        copy {
+            from 'src/docs'
+            into new File(buildDir, 'docs').path
+            include '**/*.png'
         }
     }
-
-    new File(buildDir, 'docs/ghpages.html') << file('src/docs/index.tmpl').text.replaceAll('@VERSION@', project.version).replaceAll("@DOCDATE@", buildDate())
-
-    copy {
-        from 'src/docs'
-        into new File(buildDir, 'docs').path
-        include '**/*.jpg', '**/*.png'
-    }
 }
+
 
 
 

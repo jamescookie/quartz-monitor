@@ -28,3 +28,10 @@ All config options must be in the `quartz` block in `application.groovy` (or mak
 |Will not add a javascript to the page in order to show a clock with the current time if this is set to false.
 
 |====================
+
+Example: (application.groovy or runtime.groovy)
+```groovy
+quartz.monitor.layout = myLayout
+quartz.monitor.showCountdown = false
+quartz.monitor.showTickingClock = false
+```
