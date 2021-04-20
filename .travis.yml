@@ -1,4 +1,5 @@
 language: groovy
+dist: trusty
 sudo: false
 cache:
   directories:
@@ -8,12 +9,12 @@ before_cache:
 - rm -f $HOME/.gradle/caches/modules-2/modules-2.lock
 jdk:
 - oraclejdk8
-install: true
 script: "./travis-build.sh"
 env:
   global:
-  - GIT_NAME="Robert Oschwald"
-  - GIT_EMAIL="robertoschwald@gmail.com"
-  - secure: QgwDKgm+TFRpt6fnAjbI4MGmBOIqfCm0ycyIom927aZPvhp4fzzI6wGIN06RTAPNao95BnV7TwSgonRExPfqIMCrMzDj4BXVYkK9uXUXTUPYw24+9cEv2ZvnyEurg/MR2ajpu3MHtam+7uGO8mh4pYq+693RpiU+IZFkB5vPWcM=
-  - secure: mRX4Ye6O4iHcxV48DD8Oaz+7FmrN7vMf67g3Ym24zfzLLaxbl77z0XCMQYblU4s/OBqP9BNo4Y7v6HzCxJyWwMIRqz9txk/DkUUAzTSYHIxQwJqnZTdZNjh9muVmvGuyyBj7z/IhBtKVhNDEXn+OW6f0tdiHeLnaAy6kAovvwCA=
-  - secure: CwD0E4UPufxRM0TrPpRRcBxlwrWSBspTbcHxzgEfA0986ZGpEAlzMZ40s8QaHx7iHU+h/Mx1af4OIHBZ69Oj/bGzWZpOaq1kHI9l1rdhx4WrQwUa3pM9keUsIIffm/HFhM8ipvlHSTgh/NRXUh0KAElXhyzM0cfXTVAqnb7okw/KnYo+4qkv8dF6dGPrUjDCpCddfnZ05lq7qPxaaF0E4QXG/S1ssdSnE50V0mN9rdQEX781ORMtOOWjVO+2v5w+MQD/TN9wVh7L6zGqWD3MIVvcdaTygi74zBHrqPnWqQm0ffDa7ZAgfOCTGcSyI0aTDP/RUZPq9Bzexhp0uH9DTt7Z0nDk8dKva63tOvhjngCLrOcJFoX/UUbkLv8mY+xyHwINvbFw/HJeQ6rd2KmfZWyfXIlJvzCm/+OcaGWNPOHS4n7cppcmls9CmJtZZnW3pahk38akpfEViLLWYAkaAZCZPCoWry87ak4MYlIoOiRFCBryybwBQQsxk/ms86bkE2XUHo1z8McJ76n98+v+XbdsRrMGpmi5+k9w+DTpeNuP3AQRA9wTX62iZ7irwLSdROLfk7H6iOuQ1Q8/PopWH5/cS/QG3nXz4RH/1g8oLz02/a9FhmeUFHY0+ctGlK8kSjEaARyjlMUYF03q9HNUBNHU4i59smfbBcFNoWoxgxM=
+    - TERM=dumb
+    - GIT_NAME="Robert Oschwald"
+    - GIT_EMAIL="robertoschwald@gmail.com"
+    - secure: QgwDKgm+TFRpt6fnAjbI4MGmBOIqfCm0ycyIom927aZPvhp4fzzI6wGIN06RTAPNao95BnV7TwSgonRExPfqIMCrMzDj4BXVYkK9uXUXTUPYw24+9cEv2ZvnyEurg/MR2ajpu3MHtam+7uGO8mh4pYq+693RpiU+IZFkB5vPWcM=
+    - secure: mRX4Ye6O4iHcxV48DD8Oaz+7FmrN7vMf67g3Ym24zfzLLaxbl77z0XCMQYblU4s/OBqP9BNo4Y7v6HzCxJyWwMIRqz9txk/DkUUAzTSYHIxQwJqnZTdZNjh9muVmvGuyyBj7z/IhBtKVhNDEXn+OW6f0tdiHeLnaAy6kAovvwCA=
+    - secure: CwD0E4UPufxRM0TrPpRRcBxlwrWSBspTbcHxzgEfA0986ZGpEAlzMZ40s8QaHx7iHU+h/Mx1af4OIHBZ69Oj/bGzWZpOaq1kHI9l1rdhx4WrQwUa3pM9keUsIIffm/HFhM8ipvlHSTgh/NRXUh0KAElXhyzM0cfXTVAqnb7okw/KnYo+4qkv8dF6dGPrUjDCpCddfnZ05lq7qPxaaF0E4QXG/S1ssdSnE50V0mN9rdQEX781ORMtOOWjVO+2v5w+MQD/TN9wVh7L6zGqWD3MIVvcdaTygi74zBHrqPnWqQm0ffDa7ZAgfOCTGcSyI0aTDP/RUZPq9Bzexhp0uH9DTt7Z0nDk8dKva63tOvhjngCLrOcJFoX/UUbkLv8mY+xyHwINvbFw/HJeQ6rd2KmfZWyfXIlJvzCm/+OcaGWNPOHS4n7cppcmls9CmJtZZnW3pahk38akpfEViLLWYAkaAZCZPCoWry87ak4MYlIoOiRFCBryybwBQQsxk/ms86bkE2XUHo1z8McJ76n98+v+XbdsRrMGpmi5+k9w+DTpeNuP3AQRA9wTX62iZ7irwLSdROLfk7H6iOuQ1Q8/PopWH5/cS/QG3nXz4RH/1g8oLz02/a9FhmeUFHY0+ctGlK8kSjEaARyjlMUYF03q9HNUBNHU4i59smfbBcFNoWoxgxM=
