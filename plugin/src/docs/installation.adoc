@@ -12,7 +12,9 @@ Add a dependency for the plugin by adding it to the `dependencies` block in buil
 ----
 dependencies {
    ...
-   compile 'org.grails.plugins:schwartz-monitor:{project-version}'
+   compile 'io.github.robertoschwald:schwartz-monitor:{project-version}'
+   // For plugin version <= 2.0.2:
+   // compile 'org.grails.plugins:schwartz-monitor:{project-version}'
    ...
 }
 ----
