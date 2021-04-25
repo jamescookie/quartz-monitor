@@ -4,6 +4,7 @@ buildscript {
     repositories {
         mavenLocal()
         maven { url "https://repo.grails.org/grails/core" }
+        maven { url "https://plugins.gradle.org/m2/" }
     }
     dependencies {
         classpath "org.grails:grails-gradle-plugin:$grailsVersion"
@@ -12,17 +13,24 @@ buildscript {
         classpath 'org.asciidoctor:asciidoctorj-epub3:1.5.0-alpha.6'
         classpath 'org.asciidoctor:asciidoctorj-pdf:1.5.0-alpha.11'
         classpath "org.jfrog.buildinfo:build-info-extractor-gradle:latest.release"
+
+        classpath "io.github.gradle-nexus:publish-plugin:1.0.0"
     }
 }
 
 
-group "io.github.robertoschwald"
+group "com.symentis"
 version project.file("../version.txt").text.trim()
 
 apply plugin:"eclipse"
 apply plugin:"idea"
 apply plugin:"org.grails.grails-plugin"
-apply plugin:"org.grails.grails-plugin-publish"
+
+// We publish to Sonatype (Maven Central) now.
+apply plugin: 'maven-publish'
+apply plugin: 'signing'
+apply plugin: "io.github.gradle-nexus.publish-plugin"
+
 apply plugin:"asset-pipeline"
 apply plugin:"org.grails.grails-gsp"
 apply plugin:"org.asciidoctor.convert"
@@ -95,19 +103,79 @@ assets {
     packagePlugin = true
 }
 
-grailsPublish {
-    user = System.getenv('BINTRAY_USER')
-    key = System.getenv('BINTRAY_KEY')
-    githubSlug = 'robertoschwald/grails-schwartz-monitor'
-    issueTrackerUrl = 'https://github.com/robertoschwald/grails-schwartz-monitor/issues'
-    vcsUrl = 'https://github.com/robertoschwald/grails-schwartz-monitor/'
-    websiteUrl = project.hasProperty('websiteUrl') ? project.websiteUrl : "http://grails.org/plugin/$project.name"
-    license {
-        name = project.hasProperty('license') ? [project.license] : ['Apache-2.0']
+publishing {
+    publications {
+        maven(MavenPublication) {
+            groupId = project.group
+            artifactId = 'my-plugin'
+            version = project.version
+
+            from components.java
+            artifact sourcesJar
+            artifact javadocJar
+
+            pom {
+                name = 'Grails Schwartz Monitor'
+                description = 'Monitor Quartz Jobs. Supports Grails-Schwartz and Grails-Quartz.'
+                url = 'https://github.com/symentis/grails-schwartz-monitor'
+                licenses {
+                    license {
+                        name = 'The Apache License, Version 2.0'
+                        url = 'https://www.apache.org/licenses/LICENSE-2.0.txt'
+                    }
+                }
+                developers {
+                    developer {
+                        id = 'symentis GmbH'
+                        name = 'symentis GmbH'
+                        email = 'developer@symentis.com'
+                    }
+                    developer {
+                        id = 'roos'
+                        name = 'Robert Oschwald'
+                        email = 'roos@symentis.com'
+                    }
+                    developer {
+                        id = 'elkr'
+                        name = 'Elmar Kretzer'
+                        email = 'elkr@symentis.com'
+                    }
+                    developer {
+                        id = 'juba'
+                        name = 'Juergen Baumann'
+                        email = 'juba@symentis.com'
+                    }
+                    developer {
+                        id = 'fesc'
+                        name = 'Felix Scheinost'
+                        email = 'fesc@symentis.com'
+                    }
+                }
+                scm {
+                    connection = 'scm:git:git://github.com/symentis/grails-schwartz-monitor.git'
+                    developerConnection = 'scm:git:ssh://github.com:symentis/grails-schwartz-monitor.git'
+                    url = 'https://github.com/symentis/grails-schwartz-monitor/tree/main'
+                }
+            }
+        }
     }
-    title = "Grails Schwartz Monitor"
-    desc = "Monitor Quartz Jobs. Supports Grails-Schwartz and Grails-Quartz."
-    developers = [robertoschwald:"Robert Oschwald"]
+}
+
+ext."signing.keyId" = project.hasProperty("signing.keyId") ? project.getProperty('signing.keyId') : System.getenv('SIGNING_KEY_ID')
+ext."signing.password" = project.hasProperty("signing.password") ? project.getProperty('signing.password') : System.getenv('SIGNING_PASSPHRASE')
+ext."signing.secretKeyRingFile" = project.hasProperty("signing.secretKeyRingFile") ? project.getProperty('signing.secretKeyRingFile') : (System.getenv('SIGNING_PASSPHRASE')?:"${System.properties['user.home']}${File.separator}.gnupg${File.separator}secring.gpg")
+
+ext.isReleaseVersion = !version.endsWith("SNAPSHOT")
+
+afterEvaluate {
+    signing {
+        required { isReleaseVersion && gradle.taskGraph.hasTask("publish") }
+        sign publishing.publications.maven
+    }
+}
+
+tasks.withType(Sign) {
+    onlyIf { isReleaseVersion }
 }
 
 asciidoctor {
