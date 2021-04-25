@@ -5,6 +5,8 @@
 This plugin is a fork of the [quartz-monitor](https://grails.org/plugin/quartz-monitor) plugin and supports
 the Grails [Quartz](https://plugins.grails.org/plugin/quartz) and Grails [Schwartz](https://plugins.grails.org/plugin/schwartz) plugins.
 
+Thanks to James Cook (jamescookie) and all other developers who developed Quartz Monitor.
+
 It allows you to view and administer all your Quartz job services in the web-ui.
 
 ## Prerequisites
